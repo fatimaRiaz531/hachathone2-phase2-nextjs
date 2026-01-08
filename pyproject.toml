@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "todo-app"
+version = "1.0.0"
+description = "Phase I: Console-based Todo Application with in-memory storage"
+authors = [
+    {name = "Todo App Team"},
+]
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+todo-console = "todo_app.todo_console:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
