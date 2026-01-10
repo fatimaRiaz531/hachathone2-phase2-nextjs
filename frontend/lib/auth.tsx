@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  // Check for existing auth state on mount
+  // Check for existing auth state on mount (only in browser)
   useEffect(() => {
     // Check if user is already authenticated
     if (betterAuth.isAuthenticated()) {

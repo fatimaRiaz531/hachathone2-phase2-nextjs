@@ -10,8 +10,11 @@ class ApiClient {
 
   // Generic request method that includes JWT token
   async request(endpoint: string, options: RequestInit = {}) {
-    // Get token from localStorage
-    const token = localStorage.getItem('token');
+    // Get token from localStorage (only if in browser)
+    let token = null;
+    if (typeof window !== 'undefined') {
+      token = localStorage.getItem('token');
+    }
 
     const headers = {
       'Content-Type': 'application/json',
@@ -23,35 +26,51 @@ class ApiClient {
       (headers as any)['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers,
-    });
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        ...options,
+        headers,
+      });
 
-    // If response is 401, redirect to login
-    if (response.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
-      return;
-    }
-
-    if (!response.ok) {
-      // Try to get error details from response
-      let errorMessage = `API request failed: ${response.statusText}`;
-      try {
-        const errorData = await response.json();
-        if (errorData.detail) {
-          errorMessage = errorData.detail;
+      // If response is 401, redirect to login (only if in browser)
+      if (response.status === 401) {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = '/login';
         }
-      } catch (e) {
-        // If we can't parse the error, use the status text
+        return;
       }
 
-      throw new Error(errorMessage);
-    }
+      if (!response.ok) {
+        // Try to get error details from response
+        let errorMessage = `API request failed: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          if (errorData.detail) {
+            errorMessage = errorData.detail;
+          }
+        } catch (e) {
+          // If we can't parse the error, use the status text
+        }
 
-    return response.json();
+        throw new Error(errorMessage);
+      }
+
+      return response.json();
+    } catch (error: any) {
+      // Handle network errors or fetch failures
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        // This is likely a network error (server not running, etc.)
+        console.warn(`Network error when calling ${this.baseUrl}${endpoint}. Server may not be running.`);
+
+        // For development, we could implement a fallback to in-memory storage
+        // but for now, we'll throw a more descriptive error
+        throw new Error('Unable to connect to the API server. Please make sure the backend server is running.');
+      }
+
+      throw error;
+    }
   }
 
   // GET request

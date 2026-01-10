@@ -25,10 +25,18 @@ class BetterAuthClient {
 
   constructor() {
     // Initialize from localStorage on creation
-    this.checkStoredAuth();
+    // Only access localStorage if we're in the browser
+    if (typeof window !== 'undefined') {
+      this.checkStoredAuth();
+    }
   }
 
   private checkStoredAuth(): void {
+    // Ensure we're in the browser before accessing localStorage
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
 
@@ -73,9 +81,11 @@ class BetterAuthClient {
         isAuthenticated: true,
       };
 
-      // Store token and user in localStorage
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user', JSON.stringify(this.state.user));
+      // Store token and user in localStorage (only if in browser)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', data.access_token);
+        localStorage.setItem('user', JSON.stringify(this.state.user));
+      }
 
       return { user: this.state.user, token: data.access_token };
     } catch (error: any) {
@@ -109,9 +119,11 @@ class BetterAuthClient {
         isAuthenticated: true,
       };
 
-      // Store token and user in localStorage
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user', JSON.stringify(this.state.user));
+      // Store token and user in localStorage (only if in browser)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', data.access_token);
+        localStorage.setItem('user', JSON.stringify(this.state.user));
+      }
 
       return { user: this.state.user, token: data.access_token };
     } catch (error: any) {
@@ -129,14 +141,20 @@ class BetterAuthClient {
       isAuthenticated: false,
     };
 
-    // Remove stored auth data
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    // Remove stored auth data (only if in browser)
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
   }
 
   // Get current user
   getCurrentUser(): User | null {
-    // Check if we have a user in localStorage
+    // Check if we have a user in localStorage (only if in browser)
+    if (typeof window === 'undefined') {
+      return this.state.user;
+    }
+
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
@@ -156,7 +174,11 @@ class BetterAuthClient {
 
   // Check if user is authenticated
   isAuthenticated(): boolean {
-    // Check if we have a token in localStorage
+    // Check if we have a token in localStorage (only if in browser)
+    if (typeof window === 'undefined') {
+      return this.state.isAuthenticated;
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
       this.state.token = token;
@@ -169,7 +191,11 @@ class BetterAuthClient {
 
   // Get JWT token
   getToken(): string | null {
-    // Check if we have a token in localStorage
+    // Check if we have a token in localStorage (only if in browser)
+    if (typeof window === 'undefined') {
+      return this.state.token;
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
       this.state.token = token;

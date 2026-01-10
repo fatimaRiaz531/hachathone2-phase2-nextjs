@@ -1,16 +1,5 @@
 // Simple in-memory storage for todos
-// Use global to prevent data loss during hot reloads in development
-declare global {
-  var __todos: Array<{
-    id: string;
-    title: string;
-    description?: string;
-    completed: boolean;
-    createdAt: string;
-  }>;
-  var __nextId: number;
-}
-
+// Use different approaches for browser vs Node.js environments to handle hot reloads
 let todos: Array<{
   id: string;
   title: string;
@@ -34,9 +23,24 @@ if (process.env.NODE_ENV === 'production') {
   ];
   nextId = 2;
 } else {
-  // In development, use global to persist data across hot reloads
-  if (!global.__todos) {
-    global.__todos = [
+  // In development, handle both browser and Node.js environments to persist data across hot reloads
+  if (typeof window !== 'undefined') {
+    // Browser environment - use window to persist across hot reloads
+    (window as any).__todos = (window as any).__todos || [];
+    (window as any).__nextId = (window as any).__nextId || 2;
+
+    todos = (window as any).__todos;
+    nextId = (window as any).__nextId;
+  } else if (typeof global !== 'undefined') {
+    // Node.js environment - use global to persist across hot reloads
+    (global as any).__todos = (global as any).__todos || [];
+    (global as any).__nextId = (global as any).__nextId || 2;
+
+    todos = (global as any).__todos;
+    nextId = (global as any).__nextId;
+  } else {
+    // Fallback for other environments
+    todos = [
       {
         id: '1',
         title: 'Sample Todo',
@@ -45,12 +49,8 @@ if (process.env.NODE_ENV === 'production') {
         createdAt: new Date().toISOString()
       }
     ];
+    nextId = 2;
   }
-  if (global.__nextId === undefined) {
-    global.__nextId = 2;
-  }
-  todos = global.__todos;
-  nextId = global.__nextId;
 }
 
 export const todoStore = {
@@ -69,8 +69,15 @@ export const todoStore = {
     todos.push(newTodo);
     nextId++;
     if (process.env.NODE_ENV !== 'production') {
-      global.__todos = todos;
-      global.__nextId = nextId;
+      if (typeof window !== 'undefined') {
+        // Browser environment
+        (window as any).__todos = todos;
+        (window as any).__nextId = nextId;
+      } else if (typeof global !== 'undefined') {
+        // Node.js environment
+        (global as any).__todos = todos;
+        (global as any).__nextId = nextId;
+      }
     }
     return newTodo;
   },
@@ -80,7 +87,13 @@ export const todoStore = {
     if (index !== -1) {
       todos[index] = { ...todos[index], ...updates };
       if (process.env.NODE_ENV !== 'production') {
-        global.__todos = todos;
+        if (typeof window !== 'undefined') {
+          // Browser environment
+          (window as any).__todos = todos;
+        } else if (typeof global !== 'undefined') {
+          // Node.js environment
+          (global as any).__todos = todos;
+        }
       }
       return todos[index];
     }
@@ -92,7 +105,13 @@ export const todoStore = {
     if (index !== -1) {
       todos.splice(index, 1);
       if (process.env.NODE_ENV !== 'production') {
-        global.__todos = todos;
+        if (typeof window !== 'undefined') {
+          // Browser environment
+          (window as any).__todos = todos;
+        } else if (typeof global !== 'undefined') {
+          // Node.js environment
+          (global as any).__todos = todos;
+        }
       }
       return true;
     }

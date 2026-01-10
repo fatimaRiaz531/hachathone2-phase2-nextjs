@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { apiClient } from '../lib/api';
+import { todoStore } from '../lib/todo-store';
 
 interface Todo {
   id: string;
@@ -24,16 +26,17 @@ export default function Home() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch('/api/todos');
-      if (response.ok) {
-        const data = await response.json();
-        setTodos(data);
+      const data = await apiClient.get('/todos');
+      setTodos(data);
+    } catch (err: any) {
+      // If API fails, fall back to in-memory storage
+      if (err.message && err.message.includes('Unable to connect to the API server')) {
+        console.warn('Backend unavailable, using in-memory storage');
+        setTodos(todoStore.getAll());
       } else {
-        setError('Failed to fetch todos');
+        setError(err.message || 'Error fetching todos');
+        console.error('Error fetching todos:', err);
       }
-    } catch (err) {
-      setError('Error fetching todos');
-      console.error('Error fetching todos:', err);
     } finally {
       setLoading(false);
     }
@@ -43,29 +46,25 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/todos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: newTodo.title,
-          description: newTodo.description,
-        }),
+      const createdTodo = await apiClient.post('/todos', {
+        title: newTodo.title,
+        description: newTodo.description,
       });
-
-      if (response.ok) {
-        const createdTodo = await response.json();
+      setTodos([createdTodo, ...todos]);
+      setNewTodo({ title: '', description: '' });
+      setError('');
+    } catch (err: any) {
+      // If API fails, fall back to in-memory storage
+      if (err.message && err.message.includes('Unable to connect to the API server')) {
+        console.warn('Backend unavailable, saving to in-memory storage');
+        const createdTodo = todoStore.create(newTodo.title, newTodo.description);
         setTodos([createdTodo, ...todos]);
         setNewTodo({ title: '', description: '' });
         setError('');
       } else {
-        const errorData = await response.json();
-        setError(errorData.error || 'Failed to add todo');
+        setError(err.message || 'Error adding todo');
+        console.error('Error adding todo:', err);
       }
-    } catch (err) {
-      setError('Error adding todo');
-      console.error('Error adding todo:', err);
     }
   };
 
@@ -74,46 +73,41 @@ export default function Home() {
     if (!todo) return;
 
     try {
-      const response = await fetch(`/api/todos/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: todo.title,
-          description: todo.description,
-          completed: !todo.completed,
-        }),
+      const updatedTodo = await apiClient.put(`/todos/${id}`, {
+        title: todo.title,
+        description: todo.description,
+        completed: !todo.completed,
       });
-
-      if (response.ok) {
-        const updatedTodo = await response.json();
-        setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+      setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+    } catch (err: any) {
+      // If API fails, fall back to in-memory storage
+      if (err.message && err.message.includes('Unable to connect to the API server')) {
+        console.warn('Backend unavailable, updating in-memory storage');
+        const updatedTodo = todoStore.update(id, { completed: !todo.completed });
+        if (updatedTodo) {
+          setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+        }
       } else {
-        const errorData = await response.json();
-        setError(errorData.error || 'Failed to update todo');
+        setError(err.message || 'Error updating todo');
+        console.error('Error updating todo:', err);
       }
-    } catch (err) {
-      setError('Error updating todo');
-      console.error('Error updating todo:', err);
     }
   };
 
   const deleteTodo = async (id: string) => {
     try {
-      const response = await fetch(`/api/todos/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
+      await apiClient.delete(`/todos/${id}`);
+      setTodos(todos.filter(t => t.id !== id));
+    } catch (err: any) {
+      // If API fails, fall back to in-memory storage
+      if (err.message && err.message.includes('Unable to connect to the API server')) {
+        console.warn('Backend unavailable, removing from in-memory storage');
+        todoStore.delete(id);
         setTodos(todos.filter(t => t.id !== id));
       } else {
-        const errorData = await response.json();
-        setError(errorData.error || 'Failed to delete todo');
+        setError(err.message || 'Error deleting todo');
+        console.error('Error deleting todo:', err);
       }
-    } catch (err) {
-      setError('Error deleting todo');
-      console.error('Error deleting todo:', err);
     }
   };
 
@@ -133,29 +127,29 @@ export default function Home() {
     if (!editingTodo) return;
 
     try {
-      const response = await fetch(`/api/todos/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const updatedTodo = await apiClient.put(`/todos/${id}`, {
+        title: editingTodo.title,
+        description: editingTodo.description,
+        completed: todos.find(t => t.id === id)?.completed || false,
+      });
+      setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+      setEditingTodo(null);
+    } catch (err: any) {
+      // If API fails, fall back to in-memory storage
+      if (err.message && err.message.includes('Unable to connect to the API server')) {
+        console.warn('Backend unavailable, updating in-memory storage');
+        const updatedTodo = todoStore.update(id, {
           title: editingTodo.title,
           description: editingTodo.description,
-          completed: todos.find(t => t.id === id)?.completed || false,
-        }),
-      });
-
-      if (response.ok) {
-        const updatedTodo = await response.json();
-        setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+        });
+        if (updatedTodo) {
+          setTodos(todos.map(t => (t.id === id ? updatedTodo : t)));
+        }
         setEditingTodo(null);
       } else {
-        const errorData = await response.json();
-        setError(errorData.error || 'Failed to update todo');
+        setError(err.message || 'Error updating todo');
+        console.error('Error updating todo:', err);
       }
-    } catch (err) {
-      setError('Error updating todo');
-      console.error('Error updating todo:', err);
     }
   };
 
