@@ -1,10 +1,114 @@
-# Python-generated files
+# Dependencies
+node_modules/
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
 
-# Virtual environments
-.venv
+# Build outputs
+.next/
+dist/
+build/
+*.min.js
+*.min.css
+coverage/
+lib-cov/
+*.tsbuildinfo
+.nyc_output/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
+.env.production
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vs/
+.settings/
+
+# Next.js
+.next/
+out/
+.next/**
+!.next/static
+!.next/server
+!.next/cache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.ENV
+.venv/
+.env
+.env.local
+.env.*.local
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+.pyup.yml
+.isort.cfg
+.pyre/
+.pytype/
+mypy_cache/
+
+# Backend specific
+backend/.next/
+backend/node_modules/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+
+# Frontend specific
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
