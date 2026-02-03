@@ -224,13 +224,38 @@ NODE_ENV=development
 3. Copy the connection string from the project dashboard
 4. Use this as your `NEON_DATABASE_URL` environment variable
 
-### Vercel Deployment (Frontend)
-1. Push your code to a GitHub repository
-2. Sign in to [Vercel](https://vercel.com)
-3. Import your project from GitHub
-4. Set environment variables in Vercel dashboard:
-   - `NEXT_PUBLIC_API_BASE_URL`: Your backend API URL
-5. Deploy!
+### Deploying to Render (Backend)
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Click "New +" and select "Web Service"
+3. Connect to your GitHub account and select this repository
+4. Choose the `backend` directory as the root directory
+5. Environment: Python
+6. Build Command: `pip install -r requirements.txt`
+7. Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+8. Instance Type: Free
+9. Add environment variables:
+   - `DATABASE_URL`: Your Neon PostgreSQL connection string
+   - `SECRET_KEY`: Generate a secure secret key (use `openssl rand -hex 32`)
+   - `ALGORITHM`: `HS256`
+   - `ACCESS_TOKEN_EXPIRE_MINUTES`: `30`
+   - `DEBUG`: `False`
+10. Click "Create Web Service"
+
+### Deploying to Vercel (Frontend)
+1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
+2. Click "New Project" → "Import Git Repository"
+3. Select this GitHub repository
+4. Choose the `frontend` directory as the root directory
+5. Framework preset: Next.js (should auto-detect)
+6. Environment Variables:
+   - `NEXT_PUBLIC_API_BASE_URL`: Your backend URL from Render deployment (append `/api/v1`)
+7. Build settings:
+   - Build Command: `cd frontend && npm run build`
+   - Output Directory: `out`
+8. Click "Deploy"
+
+### Alternative Deployment Methods
+For detailed deployment instructions including troubleshooting and scaling considerations, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
 ### Production Docker Setup
 For production deployment, update the docker-compose.yml with:
