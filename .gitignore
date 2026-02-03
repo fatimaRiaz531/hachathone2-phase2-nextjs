@@ -1,9 +1,86 @@
+<<<<<<< HEAD
+=======
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+
+# Build outputs
+.next/
+dist/
+build/
+*.min.js
+*.min.css
+coverage/
+lib-cov/
+*.tsbuildinfo
+.nyc_output/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
+.env.production
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vs/
+.settings/
+
+# Next.js
+.next/
+out/
+.next/**
+!.next/static
+!.next/server
+!.next/cache
+
+>>>>>>> f9b384da4fd20883755b1f952b5511100f559dd8
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+<<<<<<< HEAD
 build/
 develop-eggs/
 dist/
@@ -54,3 +131,40 @@ htmlcov/
 *.tmp
 *.bak
 *.swp
+=======
+env/
+venv/
+.venv/
+.ENV
+.venv/
+.env
+.env.local
+.env.*.local
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+.pyup.yml
+.isort.cfg
+.pyre/
+.pytype/
+mypy_cache/
+
+# Backend specific
+backend/.next/
+backend/node_modules/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+
+# Frontend specific
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+>>>>>>> f9b384da4fd20883755b1f952b5511100f559dd8

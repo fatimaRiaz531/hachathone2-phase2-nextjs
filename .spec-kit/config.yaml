@@ -1,0 +1,12 @@
+name: "Task Management Application"
+version: "2.0.0"
+description: "Full-stack Todo web application with Next.js, FastAPI, and Neon PostgreSQL"
+specifications:
+  - overview.md
+  - architecture.md
+  - features/task-crud.md
+  - features/authentication.md
+  - api/rest-endpoints.md
+  - database/schema.md
+  - ui/pages.md
+  - ui/components.md
