@@ -1,27 +1,29 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { InputField } from '@/components/auth/InputField';
-import { Button } from '@/components/ui/Button';
-import { Textarea } from '@/components/ui/Textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
-import { Task } from '@/lib/types';
+import { InputField } from '../auth/InputField';
+import { Button } from '../ui/Button';
+import { Textarea } from '../ui/Textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
+import { Task } from '../../../src/types';
+import { apiClient } from '../../../lib/api';
 
 interface TaskFormProps {
   task?: Task;
-  onSubmit: (task: Omit<Task, 'id' | 'created_at' | 'updated_at'> | Partial<Task>) => void;
+  onSuccess: (task: Task) => void;
   onCancel: () => void;
 }
 
-const TaskForm = ({ task, onSubmit, onCancel }: TaskFormProps) => {
+const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
   const [formData, setFormData] = useState({
     title: task?.title || '',
     description: task?.description || '',
     status: task?.status || 'pending',
-    due_date: task?.due_date || '',
-    tags: task?.tags?.join(',') || '', // Convert array to comma-separated string
+    due_date: task?.due_date ? new Date(task.due_date).toISOString().split('T')[0] : '',
+    priority: task?.priority || 'medium',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (task) {
@@ -29,8 +31,8 @@ const TaskForm = ({ task, onSubmit, onCancel }: TaskFormProps) => {
         title: task.title || '',
         description: task.description || '',
         status: task.status || 'pending',
-        due_date: task.due_date || '',
-        tags: task.tags?.join(',') || '',
+        due_date: task.due_date ? new Date(task.due_date).toISOString().split('T')[0] : '',
+        priority: task.priority || 'medium',
       });
     }
   }, [task]);
@@ -59,6 +61,13 @@ const TaskForm = ({ task, onSubmit, onCancel }: TaskFormProps) => {
     }));
   };
 
+  const handlePriorityChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      priority: value,
+    }));
+  };
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -72,31 +81,49 @@ const TaskForm = ({ task, onSubmit, onCancel }: TaskFormProps) => {
       newErrors.description = 'Description must be less than 1000 characters';
     }
 
-    if (formData.due_date && isNaN(Date.parse(formData.due_date))) {
-      newErrors.due_date = 'Invalid date format';
+    if (formData.due_date) {
+      const date = new Date(formData.due_date);
+      if (isNaN(date.getTime())) {
+        newErrors.due_date = 'Invalid date format';
+      }
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    // Parse tags from comma-separated string to array
-    const tagsArray = formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+    setLoading(true);
 
-    const taskData = {
-      title: formData.title,
-      description: formData.description,
-      status: formData.status,
-      due_date: formData.due_date,
-      tags: tagsArray,
-    };
+    try {
+      const taskData = {
+        title: formData.title,
+        description: formData.description,
+        status: formData.status as 'pending' | 'in_progress' | 'completed',
+        due_date: formData.due_date || null,
+        priority: formData.priority as 'low' | 'medium' | 'high',
+      };
 
-    onSubmit(task ? { ...taskData, id: task.id } : taskData);
+      let result;
+      if (task) {
+        // Update existing task
+        result = await apiClient.put(`/tasks/${task.id}`, taskData);
+      } else {
+        // Create new task
+        result = await apiClient.post('/tasks', taskData);
+      }
+
+      onSuccess(result);
+    } catch (error: any) {
+      console.error('Error submitting task:', error);
+      setErrors({ submit: error.message || 'An error occurred while saving the task' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -133,38 +160,49 @@ const TaskForm = ({ task, onSubmit, onCancel }: TaskFormProps) => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="in-progress">In Progress</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <InputField
-          label="Due Date"
-          id="due_date"
-          type="date"
-          value={formData.due_date}
-          onChange={handleChange}
-          error={errors.due_date}
-          placeholder="Due date"
-        />
+        <div className="space-y-2">
+          <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
+            Priority
+          </label>
+          <Select value={formData.priority} onValueChange={handlePriorityChange}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select priority" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="low">Low</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <InputField
-        label="Tags"
-        id="tags"
-        type="text"
-        value={formData.tags}
+        label="Due Date"
+        id="due_date"
+        type="date"
+        value={formData.due_date}
         onChange={handleChange}
-        placeholder="Comma-separated tags (e.g., work, personal, urgent)"
+        error={errors.due_date}
+        placeholder="Due date"
       />
 
+      {errors.submit && (
+        <div className="text-red-500 text-sm">{errors.submit}</div>
+      )}
+
       <div className="flex justify-end space-x-3 pt-4">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
           Cancel
         </Button>
-        <Button type="submit">
-          {task ? 'Update Task' : 'Create Task'}
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Saving...' : (task ? 'Update Task' : 'Create Task')}
         </Button>
       </div>
     </form>

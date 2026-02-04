@@ -2,8 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { Spinner } from '@/components/ui/Spinner';
+import { useAuth } from '../../../lib/auth';
+import { Spinner } from '../ui/Spinner';
 
 interface AuthGuardProps {
   children: React.ReactNode;

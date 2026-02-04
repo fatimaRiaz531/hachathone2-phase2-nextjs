@@ -2,18 +2,19 @@
 
 import React from 'react';
 import { TaskCard } from './TaskCard';
-import { Task } from '@/lib/types';
-import { EmptyState } from '@/components/common/EmptyState';
+import { Task } from '../../../src/types';
+import { EmptyState } from '../common/EmptyState';
 
 interface TaskListProps {
-  tasks: Task[];
-  onToggleComplete: (id: number) => void;
-  onEdit: (task: Task) => void;
-  onDelete: (id: number) => void;
+  tasks?: Task[];
+  onToggleComplete?: (id: string) => void;
+  onEdit?: (task: Task) => void;
+  onDelete?: (id: string) => void;
+  onRefresh?: () => void;
   loading?: boolean;
 }
 
-const TaskList = ({ tasks, onToggleComplete, onEdit, onDelete, loading }: TaskListProps) => {
+const TaskList = ({ tasks, onToggleComplete, onEdit, onDelete, onRefresh, loading }: TaskListProps) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -22,7 +23,7 @@ const TaskList = ({ tasks, onToggleComplete, onEdit, onDelete, loading }: TaskLi
     );
   }
 
-  if (tasks.length === 0) {
+  if (!tasks || tasks.length === 0) {
     return <EmptyState title="No tasks found" description="Create your first task to get started." />;
   }
 

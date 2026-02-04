@@ -1,25 +1,59 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { Checkbox } from '@/components/ui/Checkbox';
-import { Task } from '@/lib/types';
+import { Card, CardContent, CardFooter, CardHeader } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Badge } from '../ui/Badge';
+import { Checkbox } from '../ui/Checkbox';
+import { Task } from '../../../src/types';
+import { apiClient } from '../../../lib/api';
 
 interface TaskCardProps {
   task: Task;
-  onToggleComplete: (id: number) => void;
-  onEdit: (task: Task) => void;
-  onDelete: (id: number) => void;
+  onToggleComplete?: (id: string) => void;
+  onEdit?: (task: Task) => void;
+  onDelete?: (id: string) => void;
+  onRefresh?: () => void;
 }
 
-const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }: TaskCardProps) => {
+const TaskCard = ({ task, onToggleComplete, onEdit, onDelete, onRefresh }: TaskCardProps) => {
+  const handleToggleComplete = async () => {
+    try {
+      await apiClient.patch(`/tasks/${task.id}`, {
+        status: task.status === 'completed' ? 'pending' : 'completed'
+      });
+
+      if (onToggleComplete) {
+        onToggleComplete(task.id);
+      } else if (onRefresh) {
+        onRefresh();
+      }
+    } catch (error) {
+      console.error('Error toggling task completion:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      try {
+        await apiClient.delete(`/tasks/${task.id}`);
+
+        if (onDelete) {
+          onDelete(task.id);
+        } else if (onRefresh) {
+          onRefresh();
+        }
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
         return 'bg-green-100 text-green-800';
-      case 'in-progress':
+      case 'in_progress':
         return 'bg-blue-100 text-blue-800';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
@@ -28,7 +62,21 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }: TaskCardProps) =
     }
   };
 
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-red-100 text-red-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'low':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   const formatDate = (dateString: string) => {
+    if (!dateString) return '';
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -42,14 +90,14 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }: TaskCardProps) =
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
             <Checkbox
-              checked={task.completed}
-              onCheckedChange={() => onToggleComplete(task.id)}
-              aria-label={`Mark task ${task.title} as ${task.completed ? 'incomplete' : 'complete'}`}
+              checked={task.status === 'completed'}
+              onCheckedChange={handleToggleComplete}
+              aria-label={`Mark task ${task.title} as ${task.status === 'completed' ? 'incomplete' : 'complete'}`}
             />
             <div>
               <h3
                 className={`text-lg font-semibold ${
-                  task.completed ? 'line-through text-gray-500' : 'text-gray-900'
+                  task.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-900'
                 }`}
               >
                 {task.title}
@@ -59,9 +107,14 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }: TaskCardProps) =
               )}
             </div>
           </div>
-          <Badge className={getStatusColor(task.status || 'pending')}>
-            {task.status || 'pending'}
-          </Badge>
+          <div className="flex space-x-1">
+            <Badge className={getStatusColor(task.status)}>
+              {task.status.replace('_', ' ')}
+            </Badge>
+            <Badge className={getPriorityColor(task.priority)}>
+              {task.priority}
+            </Badge>
+          </div>
         </div>
       </CardHeader>
 
@@ -85,29 +138,16 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete }: TaskCardProps) =
             Due: {formatDate(task.due_date)}
           </div>
         )}
-
-        {task.tags && task.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {task.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </CardContent>
 
       <CardFooter className="flex justify-between pt-2 border-t">
-        <Button variant="outline" size="sm" onClick={() => onEdit(task)}>
+        <Button variant="outline" size="sm" onClick={() => onEdit && onEdit(task)}>
           Edit
         </Button>
         <Button
           variant="destructive"
           size="sm"
-          onClick={() => onDelete(task.id)}
+          onClick={handleDelete}
         >
           Delete
         </Button>

@@ -59,7 +59,7 @@ class BetterAuthClient {
   // Login function - calls backend auth API
   async signIn(email: string, password: string): Promise<{ user: User; token: string } | null> {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ class BetterAuthClient {
   // Signup function - calls backend auth API
   async signUp(email: string, password: string, name?: string): Promise<{ user: User; token: string } | null> {
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch('/api/v1/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
