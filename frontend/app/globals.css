@@ -27,40 +27,37 @@
 }
 
 :root {
-  /* Ultra-Vibrant Aurora Theme */
-  --background: 280 40% 98%;
-  --foreground: 260 50% 10%;
+  /* Professional Developer Theme (Teal/White) */
+  --background: 210 20% 98%;
+  --foreground: 210 40% 10%;
 
-  /* High-Contrast Primary & Secondary */
-  --primary: 320 100% 50%;
-  /* Electric Pink */
+  /* Professional Teal Accents */
+  --primary: 174 100% 33%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 190 100% 50%;
-  /* Neon Cyan */
-  --secondary-foreground: 260 50% 10%;
+  --secondary: 190 90% 45%;
+  --secondary-foreground: 0 0% 100%;
 
-  --accent: 270 100% 60%;
-  /* Vivid Violet */
+  --accent: 180 100% 25%;
   --accent-foreground: 0 0% 100%;
 
   --card: 0 0% 100%;
-  --card-foreground: 260 50% 10%;
+  --card-foreground: 210 40% 10%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 260 50% 10%;
+  --popover-foreground: 210 40% 10%;
 
-  --muted: 280 30% 95%;
-  --muted-foreground: 260 20% 40%;
+  --muted: 210 20% 90%;
+  --muted-foreground: 210 10% 40%;
 
-  --destructive: 0 100% 50%;
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 280 50% 90%;
-  --input: 280 50% 90%;
-  --ring: 320 100% 50%;
+  --border: 210 20% 88%;
+  --input: 210 20% 88%;
+  --ring: 174 100% 33%;
 
-  --radius: 1.25rem;
+  --radius: 0.75rem;
 }
 
 .dark {
@@ -101,13 +98,11 @@
 
   body {
     background-color: hsl(var(--background));
-    color: var(--foreground);
-    /* Animated Aurora Background */
+    color: hsl(var(--foreground));
+    /* Soft Professional Gradient */
     background-image:
-      radial-gradient(at 0% 0%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsl(var(--secondary) / 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, hsl(var(--primary) / 0.1) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, hsl(var(--accent) / 0.1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, hsl(var(--primary) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--secondary) / 0.05) 0px, transparent 50%);
     background-attachment: fixed;
     min-height: 100vh;
   }

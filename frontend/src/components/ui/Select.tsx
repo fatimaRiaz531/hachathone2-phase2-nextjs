@@ -64,8 +64,8 @@ const SelectTrigger = React.forwardRef<HTMLDivElement, SelectTriggerProps>(
         ref={ref}
         onClick={() => setOpen(!open)}
         className={cn(
-          'flex h-12 w-full items-center justify-between rounded-xl border-2 bg-card px-4 py-2 text-sm font-bold text-foreground cursor-pointer transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/10',
-          open ? 'border-primary ring-4 ring-primary/10' : 'border-border hover:border-primary',
+          'flex h-12 w-full items-center justify-between rounded-xl border-2 bg-card px-4 py-2 text-sm font-semibold text-foreground cursor-pointer transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/10 shadow-sm',
+          open ? 'border-primary ring-4 ring-primary/10' : 'border-input hover:border-primary hover:shadow-md',
           className
         )}
         {...props}
@@ -101,7 +101,7 @@ const SelectContent = ({ className, children, ...props }: SelectContentProps) =>
   return (
     <div
       className={cn(
-        'absolute z-[100] mt-2 max-h-60 w-full overflow-auto rounded-xl border-2 bg-card p-1 text-popover-foreground shadow-2xl animate-in fade-in-0 zoom-in-95 backdrop-blur-3xl',
+        'absolute z-[100] mt-2 max-h-60 w-full overflow-auto rounded-xl border-2 border-primary/10 bg-card/95 p-1 text-popover-foreground shadow-2xl animate-in fade-in-0 zoom-in-95 backdrop-blur-3xl',
         className
       )}
       {...props}

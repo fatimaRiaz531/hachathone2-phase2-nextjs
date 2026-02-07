@@ -62,93 +62,135 @@ export default function DashboardPage() {
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-        {/* Background Decor */}
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-primary/10 via-secondary/5 to-transparent pointer-events-none" />
+      <div className="min-h-screen bg-background text-foreground relative selection:bg-primary/20">
+        <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                  <span className="text-lg font-black text-white">T</span>
+                </div>
+                <span className="text-xl font-black tracking-tighter">TODO<span className="text-primary">PRO</span></span>
+              </div>
+              <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-muted-foreground tracking-tight">
+                <a href="#" className="text-primary">Overview</a>
+                <a href="#" className="hover:text-primary transition-colors">Team</a>
+                <a href="#" className="hover:text-primary transition-colors">Integrations</a>
+              </nav>
+            </div>
 
-        <header className="relative z-10 py-10 overflow-hidden">
-          <div className="absolute inset-0 bg-primary opacity-90 -z-10" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,hsl(var(--accent)),transparent)] opacity-40 -z-10" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white drop-shadow-lg animate-in slide-in-from-top-4 duration-500">
-              Command <span className="text-secondary italic">Center</span>
-            </h1>
-            <p className="mt-2 text-primary-foreground/80 font-bold uppercase tracking-[0.2em] text-sm">Dashboard Overview</p>
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-end hidden sm:flex">
+                <span className="text-sm font-black">{user.email?.split('@')[0]}</span>
+                <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Administrator</span>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-black">
+                {user.email?.[0].toUpperCase()}
+              </div>
+            </div>
           </div>
         </header>
 
-        <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           {/* Stats Cards */}
           {stats && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              <div className="relative group overflow-hidden bg-white dark:bg-card p-1 rounded-3xl shadow-xl transition-all hover:scale-105 active:scale-95">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-10 group-hover:opacity-20 transition-opacity" />
-                <div className="relative bg-white dark:bg-card p-8 rounded-[1.4rem] border border-primary/10">
-                  <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-2">Total Tasks</h3>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-5xl font-black text-foreground">{stats.total_tasks}</p>
-                    <div className="h-2 w-12 bg-primary/20 rounded-full" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              <div className="bg-card p-8 rounded-3xl border-2 border-border shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3">Total Operations</h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-5xl font-black tracking-tighter text-foreground">{stats.total_tasks}</p>
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
                   </div>
                 </div>
               </div>
 
-              <div className="relative group overflow-hidden bg-white dark:bg-card p-1 rounded-3xl shadow-xl transition-all hover:scale-105 active:scale-95">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-orange-600 opacity-10 group-hover:opacity-20 transition-opacity" />
-                <div className="relative bg-white dark:bg-card p-8 rounded-[1.4rem] border border-orange-500/10">
-                  <h3 className="text-xs font-black uppercase tracking-widest text-orange-500 mb-2">Pending</h3>
-                  <p className="text-5xl font-black text-orange-500">{stats.pending_tasks}</p>
+              <div className="bg-card p-8 rounded-3xl border-2 border-border shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+                <h3 className="text-xs font-black uppercase tracking-widest text-amber-600 mb-3">Pending Action</h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-5xl font-black tracking-tighter text-amber-600">{stats.pending_tasks}</p>
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
 
-              <div className="relative group overflow-hidden bg-white dark:bg-card p-1 rounded-3xl shadow-xl transition-all hover:scale-105 active:scale-95">
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary to-blue-500 opacity-10 group-hover:opacity-20 transition-opacity" />
-                <div className="relative bg-white dark:bg-card p-8 rounded-[1.4rem] border border-secondary/10">
-                  <h3 className="text-xs font-black uppercase tracking-widest text-secondary mb-2">Completed</h3>
-                  <p className="text-5xl font-black text-secondary">{stats.completed_tasks}</p>
+              <div className="bg-card p-8 rounded-3xl border-2 border-border shadow-sm transition-all hover:shadow-xl hover:-translate-y-1">
+                <h3 className="text-xs font-black uppercase tracking-widest text-secondary mb-3">Completed</h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-5xl font-black tracking-tighter text-secondary">{stats.completed_tasks}</p>
+                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-black uppercase tracking-tighter text-foreground flex items-center gap-3">
-              <div className="w-2 h-8 bg-primary rounded-full" />
-              Recent Tasks
-            </h2>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <div className="space-y-1">
+              <h2 className="text-3xl font-black tracking-tight flex items-center gap-3">
+                <div className="w-2 h-8 bg-primary rounded-full" />
+                Task Repository
+              </h2>
+              <p className="text-sm font-medium text-muted-foreground">Manage and track your operational objectives.</p>
+            </div>
             <button
               onClick={() => setShowTaskForm(true)}
-              className="vibrant-gradient px-8 py-3.5 rounded-2xl font-black uppercase tracking-wider text-sm transition-all shadow-[0_10px_20px_-5px_rgba(236,72,153,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(236,72,153,0.6)] hover:-translate-y-1 active:scale-95"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-primary/20 active:scale-95"
             >
-              Add New Task
+              Initialize New Task
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2 glass-card rounded-[2.5rem] p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3 bg-card rounded-[2.5rem] border-2 border-border p-8 shadow-sm">
               <TaskList tasks={tasks} />
             </div>
-            <div className="glass-card rounded-[2.5rem] p-6">
-              <TaskFilters
-                statusFilter={statusFilter}
-                setStatusFilter={setStatusFilter}
-                priorityFilter={priorityFilter}
-                setPriorityFilter={setPriorityFilter}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
+            <div className="space-y-6">
+              <div className="bg-card rounded-[2rem] border-2 border-border p-6 shadow-sm">
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground mb-6">Discovery Filters</h4>
+                <TaskFilters
+                  statusFilter={statusFilter}
+                  setStatusFilter={setStatusFilter}
+                  priorityFilter={priorityFilter}
+                  setPriorityFilter={setPriorityFilter}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
+              <div className="bg-primary/5 rounded-[2rem] border-2 border-primary/10 p-6">
+                <h4 className="text-sm font-black text-primary mb-2">Pro Tip</h4>
+                <p className="text-xs font-medium text-primary/70 leading-relaxed">Use natural language with our AI Chatbot to manage tasks faster.</p>
+              </div>
             </div>
           </div>
 
           {showTaskForm && (
-            <div className="fixed inset-0 bg-primary/20 backdrop-blur-xl flex items-center justify-center z-50 p-4">
-              <div className="bg-white dark:bg-card p-8 md:p-12 rounded-[3rem] shadow-2xl w-full max-w-lg border border-white/20 animate-in zoom-in-95 fade-in duration-300 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -z-10" />
-                <h3 className="text-3xl font-black uppercase tracking-tighter mb-8 text-vibrant">Create New Task</h3>
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-xl flex items-center justify-center z-50 p-4">
+              <div className="bg-card p-10 md:p-14 rounded-[3.5rem] shadow-2xl w-full max-w-xl border-4 border-border animate-in zoom-in-95 duration-300 relative">
+                <div className="flex justify-between items-start mb-10">
+                  <div className="space-y-1">
+                    <h3 className="text-4xl font-black tracking-tighter">NEW TASK</h3>
+                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Task Initialization Module</p>
+                  </div>
+                  <button onClick={() => setShowTaskForm(false)} className="bg-muted hover:bg-muted/80 p-2 rounded-xl transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
                 <TaskForm
                   onSuccess={(newTask) => {
                     setShowTaskForm(false);
-                    fetchRecentTasks(); // Refresh recent tasks
-                    if (stats) fetchStats(); // Refresh stats
+                    fetchRecentTasks();
+                    if (stats) fetchStats();
                   }}
                   onCancel={() => setShowTaskForm(false)}
                 />
