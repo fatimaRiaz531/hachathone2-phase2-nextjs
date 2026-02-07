@@ -9,7 +9,7 @@ from pydantic import BaseModel, EmailStr, field_validator
 from typing import Optional, List
 from datetime import datetime
 from enum import Enum
-from .models import TaskStatus, TaskPriority
+from models import TaskStatus, TaskPriority
 
 
 # Enum schemas for API use
@@ -176,13 +176,15 @@ class TaskPartialUpdateRequest(BaseModel):
 
 class TaskResponse(BaseModel):
     """Schema for task response."""
+    model_config = {"from_attributes": True}
+    
     id: str
     title: str
     description: Optional[str] = None
     due_date: Optional[datetime] = None
     status: TaskStatusSchema
     priority: TaskPrioritySchema
-    user_id: str
+    user_id: Optional[str] = None
     created_at: datetime
     updated_at: datetime
 
@@ -237,3 +239,16 @@ class ErrorResponse(BaseModel):
 class SuccessResponse(BaseModel):
     """Schema for success responses."""
     message: str
+# Chat Schemas
+class ChatRequest(BaseModel):
+    user_id: str
+    message: str
+
+class ChatMessageResponse(BaseModel):
+    role: str
+    content: str
+    created_at: datetime
+
+class ChatResponse(BaseModel):
+    response: str
+    history: List[ChatMessageResponse]

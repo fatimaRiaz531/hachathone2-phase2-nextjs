@@ -43,19 +43,19 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) =>
       onClick={onClose}
     >
       <div
-        className={`${sizeClasses[size]} w-full rounded-lg bg-white p-6 shadow-lg`}
+        className={`${sizeClasses[size]} w-full rounded-[2rem] bg-card p-8 shadow-2xl border border-border animate-in zoom-in-95 duration-300`}
         onClick={(e) => e.stopPropagation()}
       >
         {title && (
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-bold">{title}</h2>
+          <div className="mb-6 flex items-center justify-between border-b border-border/50 pb-4">
+            <h2 className="text-2xl font-black uppercase tracking-tight text-foreground">{title}</h2>
             <button
               onClick={onClose}
-              className="rounded-full p-1 hover:bg-gray-100"
+              className="rounded-full p-2 transition-colors hover:bg-muted text-muted-foreground hover:text-foreground"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -68,6 +68,7 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) =>
             </button>
           </div>
         )}
+
         {children}
       </div>
     </div>

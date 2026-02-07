@@ -15,13 +15,13 @@ def run_dev_server():
     print("Visit http://localhost:8000/api/v1/docs for API documentation")
 
     uvicorn.run(
-        "backend.main:app",
+        "main:app",
         host="0.0.0.0",
         port=int(os.getenv("PORT", "8000")),
         reload=True,  # Enable auto-reload for development
-        debug=True,
         log_level="info"
     )
+
 
 
 if __name__ == "__main__":

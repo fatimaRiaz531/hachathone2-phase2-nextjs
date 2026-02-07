@@ -12,11 +12,10 @@ import os
 from typing import AsyncGenerator
 
 
+from settings import settings
+
 # Database URL configuration
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+asyncpg://username:password@localhost:5432/todo_app"
-)
+DATABASE_URL = settings.database_url
 
 
 # Create async engine for application operations
@@ -27,6 +26,12 @@ async_engine: AsyncEngine = create_async_engine(
     max_overflow=30,  # Additional connections beyond pool_size
     pool_pre_ping=True,  # Verify connections before use
     pool_recycle=3600,  # Recycle connections after 1 hour
+    connect_args={
+        "ssl": "require",
+        "server_settings": {
+            "tcp_user_timeout": "10000",
+        }
+    }
 )
 
 

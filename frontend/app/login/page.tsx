@@ -6,8 +6,8 @@ import { useAuth } from '../../lib/auth'
 import Link from 'next/link'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('admin@example.com')
+  const [password, setPassword] = useState('Password123!')
   const [error, setError] = useState('')
   const router = useRouter()
   const { login, isLoading: authIsLoading } = useAuth()
@@ -47,7 +47,7 @@ export default function LoginPage() {
                 id="email-address"
                 name="email"
                 type="email"
-                autoComplete="email"
+                autoComplete="off"
                 required
                 className="w-full bg-[#1a1a1a] text-white border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#e75480] focus:border-transparent"
                 placeholder="Email address"
@@ -63,7 +63,7 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="off"
                 required
                 className="w-full bg-[#1a1a1a] text-white border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#e75480] focus:border-transparent"
                 placeholder="Password"

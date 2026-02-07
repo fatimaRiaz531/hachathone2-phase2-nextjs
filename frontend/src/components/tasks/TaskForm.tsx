@@ -57,16 +57,17 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
   const handleSelectChange = (value: string) => {
     setFormData((prev) => ({
       ...prev,
-      status: value,
+      status: value as 'pending' | 'in_progress' | 'completed',
     }));
   };
 
   const handlePriorityChange = (value: string) => {
     setFormData((prev) => ({
       ...prev,
-      priority: value,
+      priority: value as 'low' | 'medium' | 'high',
     }));
   };
+
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -127,7 +128,7 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <InputField
         label="Title"
         id="title"
@@ -151,12 +152,12 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-            Status
+          <label htmlFor="status" className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
+            Task Status
           </label>
           <Select value={formData.status} onValueChange={handleSelectChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select status" />
+            <SelectTrigger className="focus:ring-primary/20">
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">Pending</SelectItem>
@@ -167,12 +168,12 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
-            Priority
+          <label htmlFor="priority" className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
+            Task Priority
           </label>
           <Select value={formData.priority} onValueChange={handlePriorityChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select priority" />
+            <SelectTrigger className="focus:ring-primary/20">
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="low">Low</SelectItem>
@@ -181,6 +182,7 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
             </SelectContent>
           </Select>
         </div>
+
       </div>
 
       <InputField

@@ -2,8 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { apiClient } from '../../lib/api';
-import { TaskForm } from '../../src/components/tasks/TaskForm';
+import { apiClient } from '../../../lib/api';
+import { TaskForm } from '../../../src/components/tasks/TaskForm';
+import { Button } from '../../../src/components/ui/Button';
+import { Badge } from '../../../src/components/ui/Badge';
+import { ArrowLeft, Edit3, Trash2, CheckCircle, Clock, Sparkles } from 'lucide-react';
+
 
 export default function TaskDetailPage() {
   const { id } = useParams();
@@ -36,7 +40,7 @@ export default function TaskDetailPage() {
     if (confirm('Are you sure you want to delete this task?')) {
       try {
         await apiClient.delete(`/tasks/${id}`);
-        router.push('/tasks');
+        router.push('/dashboard');
       } catch (error: any) {
         setError(error.message || 'Error deleting task');
         console.error('Error deleting task:', error);
@@ -58,10 +62,10 @@ export default function TaskDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e75480] mx-auto"></div>
-          <p className="mt-4 text-gray-300">Loading task...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground font-bold uppercase tracking-widest text-xs">Loading task...</p>
         </div>
       </div>
     );
@@ -69,15 +73,15 @@ export default function TaskDetailPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => router.back()}
-            className="bg-[#e75480] hover:bg-[#d03d6c] text-white px-4 py-2 rounded-md"
-          >
-            Go Back
-          </button>
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="bg-card border-2 border-primary/20 p-12 rounded-[2.5rem] shadow-2xl text-center max-w-md">
+          <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <Trash2 className="w-10 h-10 text-primary" />
+          </div>
+          <p className="text-foreground font-bold mb-8">{error}</p>
+          <Button onClick={() => router.back()} className="w-full py-6 rounded-2xl">
+            Return to Dashboard
+          </Button>
         </div>
       </div>
     );
@@ -85,32 +89,36 @@ export default function TaskDetailPage() {
 
   if (!task) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-300 mb-4">Task not found</p>
-          <button
-            onClick={() => router.back()}
-            className="bg-[#e75480] hover:bg-[#d03d6c] text-white px-4 py-2 rounded-md"
-          >
+          <p className="text-muted-foreground mb-4 font-black uppercase tracking-widest">Task not found</p>
+          <Button onClick={() => router.back()} variant="outline">
             Go Back
-          </button>
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="bg-[#e75480] py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-center">Task Details</h1>
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      <header className="bg-primary py-8 shadow-xl shadow-primary/10">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <button
+            onClick={() => router.back()}
+            className="p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-white border border-white/10"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
+          <h1 className="text-3xl font-black uppercase tracking-tighter text-white">Task Details</h1>
+          <div className="w-12 h-12" /> {/* Spacer */}
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-4xl mx-auto px-6 py-12">
         {editing ? (
-          <div className="bg-gray-900 p-6 rounded-lg">
-            <h2 className="text-2xl font-bold mb-6">Edit Task</h2>
+          <div className="bg-card p-10 rounded-[2.5rem] shadow-2xl border border-border animate-in zoom-in-95 duration-300">
+            <h2 className="text-3xl font-black uppercase tracking-tight mb-8">Edit <span className="text-primary italic">Task</span></h2>
             <TaskForm
               task={task}
               onSuccess={(updatedTask) => {
@@ -121,85 +129,103 @@ export default function TaskDetailPage() {
             />
           </div>
         ) : (
-          <div className="bg-gray-900 p-6 rounded-lg">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h2 className="text-2xl font-bold">{task.title}</h2>
-                <div className="mt-2 flex items-center space-x-4">
-                  <span className={`px-2 py-1 rounded text-xs ${
-                    task.status === 'completed' ? 'bg-green-600' :
-                    task.status === 'in_progress' ? 'bg-yellow-600' : 'bg-blue-600'
-                  }`}>
-                    {task.status.replace('_', ' ').toUpperCase()}
-                  </span>
-                  <span className={`px-2 py-1 rounded text-xs ${
-                    task.priority === 'high' ? 'bg-red-600' :
-                    task.priority === 'medium' ? 'bg-yellow-600' : 'bg-gray-600'
-                  }`}>
-                    {task.priority.toUpperCase()}
-                  </span>
+          <div className="bg-card p-10 rounded-[2.5rem] shadow-2xl border border-border transition-all">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 font-black uppercase tracking-widest px-4 py-1.5">
+                    {task.priority.toUpperCase()} Priority
+                  </Badge>
+                  <Badge className={`font-black uppercase tracking-widest px-4 py-1.5 border-none ${task.status === 'completed' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-amber-500/10 text-amber-600'
+                    }`}>
+                    {task.status.replace('_', ' ')}
+                  </Badge>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-foreground leading-[1.1] mb-6">
+                  {task.title}
+                </h2>
+                {task.description && (
+                  <p className="text-lg text-muted-foreground leading-relaxed font-semibold">
+                    {task.description}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex shrink-0 gap-3">
+                <Button
+                  onClick={() => setEditing(true)}
+                  variant="outline"
+                  className="rounded-2xl h-14 w-14 border-2 p-0"
+                >
+                  <Edit3 className="w-6 h-6" />
+                </Button>
+                <Button
+                  onClick={handleDelete}
+                  variant="destructive"
+                  className="rounded-2xl h-14 w-14 p-0 shadow-lg shadow-destructive/20"
+                >
+                  <Trash2 className="w-6 h-6" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-10 border-t border-border/50">
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-muted/50 rounded-2xl">
+                    <Clock className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">Timeline</h4>
+                    <p className="text-sm font-bold text-foreground">
+                      Created {new Date(task.created_at).toLocaleDateString()}
+                    </p>
+                    <p className="text-xs text-muted-foreground font-semibold">
+                      Updated {new Date(task.updated_at).toLocaleTimeString()}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={handleToggleComplete}
-                  className={`px-3 py-1 rounded ${
-                    task.status === 'completed'
-                      ? 'bg-gray-600 hover:bg-gray-700'
-                      : 'bg-green-600 hover:bg-green-700'
-                  } text-white text-sm`}
-                >
-                  {task.status === 'completed' ? 'Mark Incomplete' : 'Mark Complete'}
-                </button>
-                <button
-                  onClick={() => setEditing(true)}
-                  className="px-3 py-1 rounded bg-[#e75480] hover:bg-[#d03d6c] text-white text-sm"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white text-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
 
-            {task.description && (
-              <div className="mb-6">
-                <h3 className="font-medium text-gray-300 mb-2">Description</h3>
-                <p className="text-gray-200">{task.description}</p>
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 gap-4 text-sm text-gray-300">
-              <div>
-                <strong>Created:</strong><br />
-                {new Date(task.created_at).toLocaleString()}
-              </div>
-              <div>
-                <strong>Last Updated:</strong><br />
-                {new Date(task.updated_at).toLocaleString()}
-              </div>
               {task.due_date && (
-                <>
-                  <div>
-                    <strong>Due Date:</strong><br />
-                    {new Date(task.due_date).toLocaleDateString()}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/5 rounded-2xl">
+                    <Sparkles className="w-5 h-5 text-primary" />
                   </div>
-                </>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-1">Due Date</h4>
+                    <p className="text-sm font-black text-foreground">
+                      {new Date(task.due_date).toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
+
+            <Button
+              onClick={handleToggleComplete}
+              className={`w-full mt-10 py-8 rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-sm shadow-2xl transition-all ${task.status === 'completed'
+                ? 'bg-muted text-foreground'
+                : 'bg-primary text-white shadow-primary/30'
+                }`}
+            >
+              {task.status === 'completed' ? 'Reopen Task' : '✓ Complete Task'}
+            </Button>
           </div>
         )}
 
-        <div className="mt-6">
+        <div className="mt-12 text-center">
           <button
-            onClick={() => router.back()}
-            className="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white"
+            onClick={() => router.push('/dashboard')}
+            className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground hover:text-primary transition-colors flex items-center justify-center gap-3 mx-auto group"
           >
-            Back to Tasks
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Dashboard
           </button>
         </div>
       </main>

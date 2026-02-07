@@ -8,7 +8,8 @@ import Link from 'next/link'
 export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
   const { signup, isLoading: authIsLoading } = useAuth()
@@ -18,7 +19,7 @@ export default function SignupPage() {
     setError('')
 
     try {
-      await signup(email, password, name)
+      await signup(email, password, firstName, lastName)
     } catch (err: any) {
       setError(err.message || 'An error occurred during signup')
     }
@@ -41,18 +42,32 @@ export default function SignupPage() {
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="sr-only">
-                Name
+              <label htmlFor="first-name" className="sr-only">
+                First Name
               </label>
               <input
-                id="name"
-                name="name"
+                id="first-name"
+                name="first-name"
                 type="text"
                 required
                 className="w-full bg-[#1a1a1a] text-white border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#e75480] focus:border-transparent"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="last-name" className="sr-only">
+                Last Name
+              </label>
+              <input
+                id="last-name"
+                name="last-name"
+                type="text"
+                className="w-full bg-[#1a1a1a] text-white border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#e75480] focus:border-transparent"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div>

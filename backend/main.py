@@ -10,9 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
-from .routes import auth, tasks, users
-from .middleware.auth import jwt_auth_middleware
-from .database import engine
+from routes import auth, tasks, users, chat
+from database import async_engine as engine
 from sqlmodel import SQLModel
 
 
@@ -30,17 +29,11 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    # Expose authorization header for client access to JWT
-    expose_headers=["Authorization"],
 )
-
-
-# Add JWT authentication middleware
-app.middleware("http")(jwt_auth_middleware)
 
 
 # Exception handlers
@@ -75,6 +68,10 @@ async def http_exception_handler(request, exc):
 @app.exception_handler(Exception)
 async def generic_exception_handler(request, exc):
     """Handle unexpected exceptions."""
+    # Log the full exception for debugging
+    import traceback
+    print("Generic Exception Handler triggered:")
+    traceback.print_exc()
     return JSONResponse(
         status_code=500,
         content={"detail": "An unexpected error occurred"}
@@ -85,7 +82,14 @@ async def generic_exception_handler(request, exc):
 app.include_router(auth.router, prefix="/api/v1", tags=["authentication"])
 app.include_router(tasks.router, prefix="/api/v1", tags=["tasks"])
 app.include_router(users.router, prefix="/api/v1", tags=["users"])
+app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
 
+
+# Root endpoint
+@app.get("/")
+async def root():
+    """Root endpoint to indicate API is running."""
+    return {"message": "Todo Backend API running – Phase II Simplified"}
 
 # Health check endpoint
 @app.get("/health")
@@ -94,14 +98,18 @@ async def health_check():
     return {"status": "healthy", "service": "todo-api"}
 
 
-# Initialize database tables
+# Initialize database tables on startup
 @app.on_event("startup")
 async def on_startup():
     """Initialize database tables on startup."""
-    async with engine.begin() as conn:
-        await conn.run_sync(SQLModel.metadata.create_all)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(SQLModel.metadata.create_all)
+    except Exception as e:
+        print(f"Database initialization error: {e}")
 
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Use string import format for reload support
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

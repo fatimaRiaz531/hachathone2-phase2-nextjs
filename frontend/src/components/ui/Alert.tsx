@@ -11,11 +11,12 @@ interface AlertProps {
 
 const Alert = ({ children, variant = 'info', className }: AlertProps) => {
   const variantClasses = {
-    success: 'bg-green-100 border-green-400 text-green-700',
-    error: 'bg-red-100 border-red-400 text-red-700',
-    warning: 'bg-yellow-100 border-yellow-400 text-yellow-700',
-    info: 'bg-blue-100 border-blue-400 text-blue-700',
+    success: 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950/20 dark:border-emerald-900',
+    error: 'bg-pink-50 border-primary/30 text-primary dark:bg-pink-950/20 dark:border-primary/50',
+    warning: 'bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950/20 dark:border-amber-900',
+    info: 'bg-stone-50 border-stone-200 text-stone-800 dark:bg-stone-900 dark:border-stone-800',
   };
+
 
   return (
     <div

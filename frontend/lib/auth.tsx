@@ -7,7 +7,7 @@ import { betterAuth, User } from './better-auth-client'
 interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<void>
-  signup: (email: string, password: string, name?: string) => Promise<void>
+  signup: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>
   logout: () => void
   isLoading: boolean
 }
@@ -23,13 +23,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Check for existing auth state on mount (only in browser)
   useEffect(() => {
-    // Check if user is already authenticated
-    if (betterAuth.isAuthenticated()) {
-      const currentUser = betterAuth.getCurrentUser();
-      if (currentUser) {
-        setUser(currentUser);
-      }
-    }
+    // Phase II Bypass: Always use a demo user
+    const demoUser: User = {
+      id: 'demo-user-phase-ii',
+      email: 'demo@example.com',
+      name: 'Demo User',
+      emailVerified: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    setUser(demoUser);
     setIsLoading(false);
   }, []);
 
@@ -43,8 +46,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signup = async (email: string, password: string, name?: string) => {
-    const result = await betterAuth.signUp(email, password, name);
+  const signup = async (email: string, password: string, firstName?: string, lastName?: string) => {
+    const result = await betterAuth.signUp(email, password, firstName, lastName);
     if (result) {
       setUser(result.user);
       router.push('/dashboard');

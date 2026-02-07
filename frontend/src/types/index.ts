@@ -62,6 +62,7 @@ export interface Task {
   description?: string;
   due_date?: string;
   status: 'pending' | 'in_progress' | 'completed';
+  completed: boolean;
   priority: 'low' | 'medium' | 'high';
   user_id: string;
   created_at: string;
@@ -128,7 +129,7 @@ export interface UserProfileUpdateRequest {
   last_name?: string;
 }
 
-export interface UserProfileResponse extends User {}
+export interface UserProfileResponse extends User { }
 
 export interface ErrorResponse {
   detail: string;

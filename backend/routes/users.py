@@ -8,10 +8,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from datetime import datetime
-from ..models import User
-from ..schemas import UserProfileResponse, UserProfileUpdateRequest, TaskStatsResponse
-from ..database import get_async_session
-from ..middleware.auth import get_current_user
+from models import User
+from schemas import UserProfileResponse, UserProfileUpdateRequest, TaskStatsResponse
+from database import get_async_session
+from middleware.auth import get_current_user
 from typing import List
 
 
@@ -85,7 +85,7 @@ async def get_task_statistics(
     """
     Get task statistics for current user.
     """
-    from ..models import Task
+    from models import Task
     from sqlalchemy import func, and_
 
     # Base query for user's tasks

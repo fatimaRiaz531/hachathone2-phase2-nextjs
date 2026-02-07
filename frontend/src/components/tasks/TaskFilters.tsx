@@ -21,28 +21,33 @@ const TaskFilters = ({
   setSearchQuery,
 }: TaskFiltersProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      <div className="md:col-span-2">
-        <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
-          Search
+    <div className="flex flex-col gap-5 group/filters">
+      <div className="space-y-2">
+        <label htmlFor="search" className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
+          Search Tasks
         </label>
-        <input
-          type="text"
-          id="search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search tasks..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            id="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by title..."
+            className="w-full pl-4 pr-10 py-3 bg-card border-2 border-border rounded-xl text-sm font-bold text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all shadow-sm"
+          />
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+            🔍
+          </div>
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+      <div className="space-y-2">
+        <label htmlFor="status" className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
           Status
         </label>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <Select value={statusFilter} onValueChange={setStatusFilter} defaultValue="">
           <SelectTrigger>
-            <SelectValue placeholder="Filter by status" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="">All Statuses</SelectItem>
@@ -53,13 +58,13 @@ const TaskFilters = ({
         </Select>
       </div>
 
-      <div>
-        <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1">
+      <div className="space-y-2">
+        <label htmlFor="priority" className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
           Priority
         </label>
-        <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+        <Select value={priorityFilter} onValueChange={setPriorityFilter} defaultValue="">
           <SelectTrigger>
-            <SelectValue placeholder="Filter by priority" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="">All Priorities</SelectItem>
@@ -70,6 +75,7 @@ const TaskFilters = ({
         </Select>
       </div>
     </div>
+
   );
 };
 

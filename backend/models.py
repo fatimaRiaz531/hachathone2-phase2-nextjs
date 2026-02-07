@@ -6,14 +6,14 @@ following the specifications for the Todo Web App.
 """
 
 from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, List
 from datetime import datetime
 from enum import Enum
 import uuid
 
 
 if TYPE_CHECKING:
-    from typing import List
+    pass
 
 
 # Enums for status and priority
@@ -78,7 +78,7 @@ class User(UserBase, table=True):
     )
 
     # Relationship to tasks
-    tasks: Optional["List[Task]"] = Relationship(
+    tasks: List["Task"] = Relationship(
         back_populates="user",
         sa_relationship_kwargs={
             "cascade": "all, delete-orphan",
@@ -87,7 +87,16 @@ class User(UserBase, table=True):
     )
 
     # Relationship to refresh tokens
-    refresh_tokens: Optional["List[RefreshToken]"] = Relationship(
+    refresh_tokens: List["RefreshToken"] = Relationship(
+        back_populates="user",
+        sa_relationship_kwargs={
+            "cascade": "all, delete-orphan",
+            "lazy": "selectin"
+        }
+    )
+
+    # Relationship to conversations
+    conversations: List["Conversation"] = Relationship(
         back_populates="user",
         sa_relationship_kwargs={
             "cascade": "all, delete-orphan",
@@ -134,7 +143,8 @@ class Task(TaskBase, table=True):
         primary_key=True,
         description="Unique task identifier"
     )
-    user_id: str = Field(
+    user_id: Optional[str] = Field(
+        default=None,
         foreign_key="users.id",
         index=True,
         description="Owner user identifier"
@@ -155,6 +165,77 @@ class Task(TaskBase, table=True):
             "lazy": "selectin"
         }
     )
+
+
+# Conversation models for Phase III
+class ConversationBase(SQLModel):
+    """Base model for Conversation."""
+    user_id: str = Field(
+        foreign_key="users.id",
+        index=True,
+        description="Owner user identifier"
+    )
+
+
+class Conversation(ConversationBase, table=True):
+    """Conversation model representing a chat session."""
+    __tablename__ = "conversations"
+
+    id: str = Field(
+        default_factory=lambda: str(uuid.uuid4()),
+        primary_key=True,
+        description="Unique conversation identifier"
+    )
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        description="Creation timestamp"
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        description="Last update timestamp"
+    )
+
+    # Relationship to user
+    user: User = Relationship(back_populates="conversations")
+    
+    # Relationship to messages
+    messages: List["Message"] = Relationship(
+        back_populates="conversation",
+        sa_relationship_kwargs={
+            "cascade": "all, delete-orphan",
+            "order_by": "Message.created_at",
+            "lazy": "selectin"
+        }
+    )
+
+
+class MessageBase(SQLModel):
+    """Base model for Message."""
+    role: str = Field(description="Message role (user, assistant, system)")
+    content: str = Field(description="Message content")
+    conversation_id: str = Field(
+        foreign_key="conversations.id",
+        index=True,
+        description="Parent conversation identifier"
+    )
+
+
+class Message(MessageBase, table=True):
+    """Message model representing a single chat message."""
+    __tablename__ = "messages"
+
+    id: str = Field(
+        default_factory=lambda: str(uuid.uuid4()),
+        primary_key=True,
+        description="Unique message identifier"
+    )
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        description="Creation timestamp"
+    )
+
+    # Relationship to conversation
+    conversation: Conversation = Relationship(back_populates="messages")
 
 
 # Refresh Token model

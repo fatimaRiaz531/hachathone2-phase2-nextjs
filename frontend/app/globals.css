@@ -1,21 +1,146 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --dark-pink: #e75480;
-  --dark-pink-hover: #d03d6c;
-  --black: #000000;
-  --dark-gray: #1a1a1a;
-  --light-gray: #f5f5f5;
-  --white: #ffffff;
-  --text-light: #ffffff;
-  --text-dark: #000000;
-  --border-color: #e0e0e0;
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --background: var(--background);
+  --foreground: var(--foreground);
+  --primary: var(--primary);
+  --primary-foreground: var(--primary-foreground);
+  --card: var(--card);
+  --card-foreground: var(--card-foreground);
+  --popover: var(--popover);
+  --popover-foreground: var(--popover-foreground);
+  --secondary: var(--secondary);
+  --secondary-foreground: var(--secondary-foreground);
+  --muted: var(--muted);
+  --muted-foreground: var(--muted-foreground);
+  --accent: var(--accent);
+  --accent-foreground: var(--accent-foreground);
+  --destructive: var(--destructive);
+  --destructive-foreground: var(--destructive-foreground);
+  --border: var(--border);
+  --input: var(--input);
+  --ring: var(--ring);
+  --radius: var(--radius);
 }
 
-body {
-  background-color: var(--black);
-  color: var(--text-light);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+:root {
+  /* Ultra-Vibrant Aurora Theme */
+  --background: 280 40% 98%;
+  --foreground: 260 50% 10%;
+
+  /* High-Contrast Primary & Secondary */
+  --primary: 320 100% 50%;
+  /* Electric Pink */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 190 100% 50%;
+  /* Neon Cyan */
+  --secondary-foreground: 260 50% 10%;
+
+  --accent: 270 100% 60%;
+  /* Vivid Violet */
+  --accent-foreground: 0 0% 100%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 260 50% 10%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 260 50% 10%;
+
+  --muted: 280 30% 95%;
+  --muted-foreground: 260 20% 40%;
+
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 280 50% 90%;
+  --input: 280 50% 90%;
+  --ring: 320 100% 50%;
+
+  --radius: 1.25rem;
+}
+
+.dark {
+  /* Deep Cosmic Dark Mode */
+  --background: 260 60% 5%;
+  --foreground: 210 40% 98%;
+
+  --primary: 320 100% 60%;
+  /* Radiant Pink */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 180 100% 50%;
+  /* Electric Turquoise */
+  --secondary-foreground: 260 60% 5%;
+
+  --accent: 280 100% 70%;
+  /* Neon Purple */
+  --accent-foreground: 0 0% 100%;
+
+  --card: 260 50% 8%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 260 50% 10%;
+  --popover-foreground: 210 40% 98%;
+
+  --muted: 260 40% 15%;
+  --muted-foreground: 260 20% 70%;
+
+  --border: 260 50% 20%;
+  --input: 260 50% 20%;
+  --ring: 320 100% 60%;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: var(--foreground);
+    /* Animated Aurora Background */
+    background-image:
+      radial-gradient(at 0% 0%, hsl(var(--primary) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(var(--secondary) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--primary) / 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsl(var(--accent) / 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+.glass-card {
+  background-color: hsl(var(--card) / 0.6);
+  @apply backdrop-blur-xl shadow-2xl;
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+.vibrant-gradient {
+  background: linear-gradient(to bottom right, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)));
+  color: hsl(var(--primary-foreground));
+}
+
+.text-vibrant {
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary) / 0.5);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.8);
 }

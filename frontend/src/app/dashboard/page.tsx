@@ -10,16 +10,17 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { Task } from '@/lib/types';
 import { tasksApi } from '@/lib/api/tasks';
 
+
 const DashboardPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [stats, setStats] = useState({
-    total: 0,
-    completed: 0,
-    pending: 0,
-    inProgress: 0,
+    total_tasks: 0,
+    completed_tasks: 0,
+    pending_tasks: 0,
+    in_progress_tasks: 0,
   });
 
   // Load tasks and stats
@@ -55,7 +56,7 @@ const DashboardPage = () => {
     }
   };
 
-  const handleUpdateTask = async (taskData: Partial<Task> & { id: number }) => {
+  const handleUpdateTask = async (taskData: Partial<Task> & { id: string }) => {
     try {
       const updatedTask = await tasksApi.updateTask(taskData.id, taskData);
       setTasks(tasks.map(t => t.id === taskData.id ? updatedTask : t));
@@ -66,26 +67,26 @@ const DashboardPage = () => {
     }
   };
 
-  const handleToggleComplete = async (id: number) => {
+  const handleToggleComplete = async (id: string) => {
     try {
       const taskToToggle = tasks.find(t => t.id === id);
       if (!taskToToggle) return;
 
-      const updatedTask = await tasksApi.patchTask(id, { completed: !taskToToggle.completed });
+      const updatedTask = await tasksApi.patchTask(id, { status: taskToToggle.status === 'completed' ? 'pending' : 'completed' });
       setTasks(tasks.map(t => t.id === id ? updatedTask : t));
 
       // Update stats
-      if (taskToToggle.completed) {
+      if (taskToToggle.status === 'completed') {
         setStats(prev => ({
           ...prev,
-          completed: prev.completed - 1,
-          pending: prev.pending + 1
+          completed_tasks: prev.completed_tasks - 1,
+          pending_tasks: prev.pending_tasks + 1
         }));
       } else {
         setStats(prev => ({
           ...prev,
-          completed: prev.completed + 1,
-          pending: prev.pending - 1
+          completed_tasks: prev.completed_tasks + 1,
+          pending_tasks: prev.pending_tasks - 1
         }));
       }
     } catch (error) {
@@ -98,7 +99,7 @@ const DashboardPage = () => {
     setShowTaskForm(true);
   };
 
-  const handleDeleteTask = async (id: number) => {
+  const handleDeleteTask = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
         await tasksApi.deleteTask(id);
@@ -107,7 +108,7 @@ const DashboardPage = () => {
         // Update stats
         setStats(prev => ({
           ...prev,
-          total: prev.total - 1
+          total_tasks: prev.total_tasks - 1
         }));
       } catch (error) {
         console.error('Error deleting task:', error);
@@ -138,7 +139,7 @@ const DashboardPage = () => {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.total}</div>
+              <div className="text-2xl font-bold">{stats.total_tasks}</div>
             </CardContent>
           </Card>
 
@@ -150,7 +151,7 @@ const DashboardPage = () => {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.completed}</div>
+              <div className="text-2xl font-bold">{stats.completed_tasks}</div>
             </CardContent>
           </Card>
 
@@ -162,7 +163,7 @@ const DashboardPage = () => {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.pending}</div>
+              <div className="text-2xl font-bold">{stats.pending_tasks}</div>
             </CardContent>
           </Card>
 
@@ -174,7 +175,7 @@ const DashboardPage = () => {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.inProgress}</div>
+              <div className="text-2xl font-bold">{stats.in_progress_tasks}</div>
             </CardContent>
           </Card>
         </div>
@@ -206,7 +207,15 @@ const DashboardPage = () => {
         >
           <TaskForm
             task={editingTask || undefined}
-            onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+            onSuccess={(task) => {
+              if (editingTask) {
+                setTasks(tasks.map(t => t.id === task.id ? task : t));
+              } else {
+                setTasks([task, ...tasks]);
+              }
+              setShowTaskForm(false);
+              setEditingTask(null);
+            }}
             onCancel={() => {
               setShowTaskForm(false);
               setEditingTask(null);
@@ -217,5 +226,6 @@ const DashboardPage = () => {
     </AuthGuard>
   );
 };
+
 
 export default DashboardPage;

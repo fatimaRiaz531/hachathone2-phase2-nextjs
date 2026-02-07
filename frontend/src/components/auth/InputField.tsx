@@ -29,8 +29,8 @@ const InputField = ({
 }: InputFieldProps) => {
   return (
     <div className={cn('space-y-2', className)}>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label htmlFor={id} className="block text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
+        {label} {required && <span className="text-primary">*</span>}
       </label>
       <Input
         id={id}
@@ -38,10 +38,14 @@ const InputField = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''}
+        className={cn(
+          "transition-all duration-300",
+          error ? 'border-primary ring-2 ring-primary/20' : 'border-border focus:border-primary focus:ring-4 focus:ring-primary/10'
+        )}
         required={required}
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-xs font-bold text-primary italic mt-1 ml-1">{error}</p>}
+
     </div>
   );
 };

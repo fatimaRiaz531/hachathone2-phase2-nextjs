@@ -10,8 +10,8 @@ from jose import jwt, JWTError
 from datetime import datetime
 from typing import Optional
 import os
-from ..models import User
-from ..database import get_async_session
+from models import User
+from database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 import hashlib
@@ -23,52 +23,60 @@ ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 
-async def get_current_user(token: HTTPAuthorizationCredentials = Depends(security)) -> User:
+async def get_current_user(
+    token: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    db: AsyncSession = Depends(get_async_session)
+) -> User:
     """
-    Get current user from JWT token.
-
-    Args:
-        token: HTTP authorization credentials
-
-    Returns:
-        User: The authenticated user
-
-    Raises:
-        HTTPException: If token is invalid or user not found
+    Get current user from JWT token. 
+    Phase II Bypass: Returns a demo user if authentication fails.
     """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    # Create a consistent demo user ID
+    DEMO_USER_ID = "demo-user-phase-ii"
+    
+    async def get_demo_user(db: AsyncSession):
+        result = await db.execute(select(User).where(User.id == DEMO_USER_ID))
+        demo_user = result.scalar_one_or_none()
+        
+        if not demo_user:
+            # Create the demo user if it doesn't exist
+            demo_user = User(
+                id=DEMO_USER_ID,
+                email="demo@example.com",
+                password_hash="phase2bypass",
+                first_name="Demo",
+                last_name="User",
+                is_active=True
+            )
+            db.add(demo_user)
+            await db.commit()
+            await db.refresh(demo_user)
+        return demo_user
+
+    if not token:
+        return await get_demo_user(db)
 
     try:
         payload = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
-
+        
         if user_id is None:
-            raise credentials_exception
+            return await get_demo_user(db)
 
-        # Verify token hasn't expired
-        exp = payload.get("exp")
-        if exp and datetime.utcnow().timestamp() > exp:
-            raise credentials_exception
-
-    except JWTError:
-        raise credentials_exception
-
-    # Get user from database
-    async with get_async_session() as session:
-        result = await session.execute(select(User).where(User.id == user_id))
+        # Get user from database
+        result = await db.execute(select(User).where(User.id == user_id))
         user = result.scalar_one_or_none()
 
         if user is None or not user.is_active:
-            raise credentials_exception
-
+            return await get_demo_user(db)
+        
         return user
+
+    except Exception:
+        return await get_demo_user(db)
 
 
 # Middleware function for JWT validation

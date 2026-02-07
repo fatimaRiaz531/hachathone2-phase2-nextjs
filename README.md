@@ -1,286 +1,244 @@
-# Todo Web App with Authentication
+# Todo Web App - Complete Full-Stack Application
 
-A full-stack todo application featuring user authentication, task management, and a responsive UI.
+A comprehensive todo web application with authentication, built using a modern tech stack featuring Next.js 16+, FastAPI, and PostgreSQL.
 
-## Features
+## 🚀 Features
 
-- **User Authentication**: Secure JWT-based authentication system
-- **Task Management**: Create, read, update, and delete tasks
-- **User Isolation**: Each user sees only their own tasks
-- **Responsive UI**: Mobile-first design with Next.js and Tailwind CSS
-- **RESTful API**: FastAPI backend with async operations
-- **Database**: PostgreSQL with Neon DB compatibility
+- **User Authentication**: Complete JWT-based authentication system
+- **Task Management**: Full CRUD operations for todos with filtering and sorting
+- **Responsive UI**: Mobile-first design with Tailwind CSS
+- **Modern Tech Stack**: Next.js 16+ with App Router, FastAPI, PostgreSQL
+- **Real-time Updates**: Live task management experience
+- **Secure**: Industry-standard security practices
 
-## Tech Stack
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: Next.js 16+ (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with responsive design
+- **State Management**: React hooks and SWR/react-query
 
 ### Backend
 - **Framework**: FastAPI 0.104+
+- **Database**: PostgreSQL (compatible with Neon DB)
 - **ORM**: SQLModel (Pydantic + SQLAlchemy hybrid)
-- **Database**: PostgreSQL-compatible (tested with Neon DB)
-- **Authentication**: JWT with python-jose/cryptography
+- **Authentication**: JWT with python-jose
 - **Validation**: Pydantic v2
-- **Async**: asyncio, asyncpg for database connections
 
-### Frontend
-- **Framework**: Next.js 16+ with App Router
-- **Language**: TypeScript strict mode
-- **Styling**: Tailwind CSS with responsive-first design
-- **State Management**: React hooks, SWR/react-query for data fetching
-- **Authentication**: JWT token management
+### Infrastructure
+- **Frontend Hosting**: Vercel
+- **Backend Hosting**: Render
+- **Database**: Neon DB (serverless PostgreSQL)
+- **Containerization**: Docker
 
-## Project Structure
+## 📋 Prerequisites
 
-```
-todo-web-app/
-├── backend/                    # FastAPI backend
-│   ├── main.py                # Application entry point
-│   ├── models.py              # SQLModel database models
-│   ├── schemas.py             # Pydantic request/response schemas
-│   ├── database.py            # DB connection/session management
-│   ├── dependencies.py        # FastAPI dependency injection
-│   ├── middleware/            # Authentication, logging, etc.
-│   │   └── auth.py            # JWT authentication
-│   └── routes/                # API route handlers
-│       ├── auth.py            # Authentication endpoints
-│       ├── tasks.py           # Task management endpoints
-│       └── users.py           # User management endpoints
-├── frontend/                   # Next.js frontend
-│   ├── app/                   # App Router pages
-│   │   ├── login/page.tsx     # Login page
-│   │   ├── register/page.tsx  # Registration page
-│   │   ├── dashboard/page.tsx # Dashboard page
-│   │   └── layout.tsx         # Root layout
-│   ├── components/            # Reusable React components
-│   │   ├── TaskCard.tsx       # Task display component
-│   │   ├── TaskForm.tsx       # Task creation/editing form
-│   │   └── AuthGuard.tsx      # Authentication wrapper
-│   ├── lib/                   # Utility functions
-│   │   ├── api/               # API client and requests
-│   │   ├── types.ts           # TypeScript type definitions
-│   │   └── utils.ts           # Helper functions
-│   └── public/                # Static assets
-├── specs/                      # Specification files
-│   ├── constitution.md        # Project constitution
-│   ├── features/              # Feature specifications
-│   ├── api/                   # API endpoint specs
-│   ├── ui/                    # User interface specs
-│   └── database/              # Database schema specs
-├── requirements.txt           # Python dependencies
-├── package.json               # Node.js dependencies
-├── docker-compose.yml         # Container orchestration
-└── README.md                  # Project documentation
+- Node.js 18+ for frontend
+- Python 3.8+ for backend
+- PostgreSQL (or Neon DB account)
+- Git
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd todo-web-app
 ```
 
-## Installation & Setup
+### 2. Backend Setup
 
-### Prerequisites
-- Docker and Docker Compose
-- Or Python 3.8+ and Node.js 18+
+```bash
+# Navigate to backend directory
+cd backend
 
-### Option 1: Using Docker (Recommended)
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-1. Clone the repository
-2. Create a `.env` file with the following variables:
-   ```bash
-   # Neon PostgreSQL Database Configuration
-   NEON_DATABASE_URL=postgresql+asyncpg://username:password@ep-xxx.us-east-1.aws.neon.tech/dbname
+# Install dependencies
+pip install -r requirements.txt
 
-   # JWT Configuration
-   SECRET_KEY=your_very_long_secret_key_here_replace_with_secure_random_string
-   ALGORITHM=HS256
-   ACCESS_TOKEN_EXPIRE_MINUTES=30
-   REFRESH_TOKEN_EXPIRE_DAYS=7
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your database URL and secret keys
 
-   # Better Auth Configuration (if using Better Auth)
-   BETTER_AUTH_SECRET=your_better_auth_secret_here
-   BETTER_AUTH_URL=http://localhost:8000
+# Run the backend
+python run.py
+```
 
-   # Frontend Configuration
-   NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
-   ```
-3. Run the application:
-   ```bash
-   docker-compose up --build
-   ```
+The backend will start on `http://localhost:8000`
 
-The application will be available at:
-- Backend API: `http://localhost:8000`
-- API Documentation: `http://localhost:8000/api/v1/docs`
-- Frontend: `http://localhost:3000`
+### 3. Frontend Setup
 
-### Option 2: Local Development
+```bash
+# In a new terminal, navigate to frontend directory
+cd frontend
 
-#### Backend Setup
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Set environment variables:
-   ```bash
-   export DATABASE_URL=postgresql+asyncpg://username:password@ep-xxx.us-east-1.aws.neon.tech/dbname
-   export SECRET_KEY=your_very_long_secret_key_here
-   ```
-5. Run the application:
-   ```bash
-   uvicorn main:app --reload
-   ```
+# Install dependencies
+npm install
 
-#### Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your backend API URL
 
-## Environment Variables
+# Run the frontend
+npm run dev
+```
+
+The frontend will start on `http://localhost:3000`
+
+## 🔐 Environment Variables
 
 ### Backend (.env)
-```bash
-# Database Configuration (Neon PostgreSQL)
-NEON_DATABASE_URL=postgresql+asyncpg://username:password@ep-xxx.us-east-1.aws.neon.tech/dbname
-
-# JWT Configuration
-SECRET_KEY=your_very_long_secret_key_here_replace_with_secure_random_string
+```env
+DATABASE_URL=postgresql+asyncpg://username:password@localhost:5432/todo_app
+SECRET_KEY=your-super-secret-key-change-this-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 REFRESH_TOKEN_EXPIRE_DAYS=7
-
-# Development Settings
-DEBUG=True
-
-# Better Auth Configuration (if using Better Auth)
-BETTER_AUTH_SECRET=your_better_auth_secret_here
-BETTER_AUTH_URL=http://localhost:8000
 ```
 
 ### Frontend (.env.local)
-```bash
-# API Configuration
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
-NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:8000
-
-# Development Settings
-NODE_ENV=development
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-## API Endpoints
+## 🏗️ Project Structure
 
-### Authentication
-- `POST /api/v1/auth/register` - User registration
-- `POST /api/v1/auth/login` - User login
-- `POST /api/v1/auth/logout` - User logout
-- `POST /api/v1/auth/refresh` - Token refresh
+```
+todo-web-app/
+├── backend/
+│   ├── main.py              # FastAPI application entry point
+│   ├── models.py            # SQLModel database models
+│   ├── schemas.py           # Pydantic request/response schemas
+│   ├── database.py          # DB connection/session management
+│   ├── middleware/
+│   │   └── auth.py          # JWT authentication middleware
+│   └── routes/
+│       ├── auth.py          # Authentication endpoints
+│       ├── tasks.py         # Task management endpoints
+│       └── users.py         # User management endpoints
+├── frontend/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── login/page.tsx   # Login page
+│   │   ├── register/page.tsx # Registration page
+│   │   ├── dashboard/page.tsx # Dashboard page
+│   │   └── layout.tsx       # Root layout
+│   ├── components/          # Reusable React components
+│   ├── lib/                 # Utility functions
+│   └── next.config.js       # Next.js configuration
+├── docker-compose.yml       # Container orchestration
+├── requirements.txt         # Python dependencies
+├── package.json             # Node.js dependencies
+└── README.md
+```
 
-### User Management
-- `GET /api/v1/users/me` - Get current user
-- `PUT /api/v1/users/me` - Update current user
+## 🐳 Docker Setup
 
-### Task Management
-- `GET /api/v1/tasks` - Get all tasks (with filtering, sorting, pagination)
-- `POST /api/v1/tasks` - Create a new task
-- `GET /api/v1/tasks/{task_id}` - Get a specific task
-- `PUT /api/v1/tasks/{task_id}` - Update a task
-- `PATCH /api/v1/tasks/{task_id}` - Partially update a task
-- `DELETE /api/v1/tasks/{task_id}` - Delete a task
-- `GET /api/v1/users/me/tasks/stats` - Get task statistics
+Build and run with Docker Compose:
 
-## Security Features
+```bash
+# Build and start both services
+docker-compose up --build
 
-- JWT stateless authentication
-- Password hashing with bcrypt
-- Input validation at all levels
-- SQL injection prevention via ORM parameterization
-- User data isolation (each user can only access their own data)
+# Backend will be available at http://localhost:8000
+# Frontend will be available at http://localhost:3000
+```
 
-## Architecture Highlights
+## 🚢 Deployment
 
-- **JWT Stateless Authentication**: All API endpoints require JWT tokens in Authorization header
-- **User Isolation**: Every database query filters by authenticated user's ID
-- **Async Patterns**: All route handlers use async/await with async SQLAlchemy
-- **Clean Architecture**: Clear separation of concerns with models, schemas, routes, and middleware
-- **Server Components**: Default to React Server Components unless client interaction required
+### Backend to Render
+1. Create a new Web Service on Render
+2. Connect to your GitHub repository
+3. Set the root directory to `/backend`
+4. Add environment variables from `.env`
+5. Set build command: `pip install -r requirements.txt`
+6. Set start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
-## Deployment
+### Frontend to Vercel
+1. Create a new project on Vercel
+2. Connect to your GitHub repository
+3. Set the root directory to `/frontend`
+4. Add environment variables from `.env.local`
+5. Vercel will automatically detect and configure Next.js
 
-### Neon PostgreSQL Setup
-1. Create a Neon account at [neon.tech](https://neon.tech)
-2. Create a new project
-3. Copy the connection string from the project dashboard
-4. Use this as your `NEON_DATABASE_URL` environment variable
+## 🧪 Running Tests
 
-### Deploying to Render (Backend)
-1. Go to [Render Dashboard](https://dashboard.render.com)
-2. Click "New +" and select "Web Service"
-3. Connect to your GitHub account and select this repository
-4. Choose the `backend` directory as the root directory
-5. Environment: Python
-6. Build Command: `pip install -r requirements.txt`
-7. Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-8. Instance Type: Free
-9. Add environment variables:
-   - `DATABASE_URL`: Your Neon PostgreSQL connection string
-   - `SECRET_KEY`: Generate a secure secret key (use `openssl rand -hex 32`)
-   - `ALGORITHM`: `HS256`
-   - `ACCESS_TOKEN_EXPIRE_MINUTES`: `30`
-   - `DEBUG`: `False`
-10. Click "Create Web Service"
+### Backend Tests
+```bash
+cd backend
+python -m pytest
+```
 
-### Deploying to Vercel (Frontend)
-1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Click "New Project" → "Import Git Repository"
-3. Select this GitHub repository
-4. Choose the `frontend` directory as the root directory
-5. Framework preset: Next.js (should auto-detect)
-6. Environment Variables:
-   - `NEXT_PUBLIC_API_BASE_URL`: Your backend URL from Render deployment (append `/api/v1`)
-7. Build settings:
-   - Build Command: `cd frontend && npm run build`
-   - Output Directory: `out`
-8. Click "Deploy"
+### Frontend Tests
+```bash
+cd frontend
+npm run test
+```
 
-### Alternative Deployment Methods
-For detailed deployment instructions including troubleshooting and scaling considerations, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
+## 🔧 API Documentation
 
-### Production Docker Setup
-For production deployment, update the docker-compose.yml with:
-- SSL certificates
-- Production database configuration
-- Environment-specific settings
-- Health checks and monitoring
+Once the backend is running, API documentation is available at:
+- Swagger UI: `http://localhost:8000/api/v1/docs`
+- ReDoc: `http://localhost:8000/api/v1/redoc`
 
-## Development
+## 🤖 Phase III (AI-Powered Todo Chatbot)
 
-This project follows a spec-driven development approach. All code is generated from specifications to ensure consistency and maintainability.
+Phase III introduces a conversational AI assistant that allows you to manage tasks using natural language.
 
-## Contributing
+### How to run Phase III Chatbot
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+1. **Environment Setup**:
+   Ensure you have the following environment variables set:
+   - **Backend (.env)**:
+     ```env
+     OPENAI_API_KEY=your-openai-api-key
+     ```
+   - **Frontend (.env.local)**:
+     ```env
+     NEXT_PUBLIC_OPENAI_DOMAIN_KEY=your-openai-domain-key
+     ```
 
-## License
+2. **Start the MCP Server**:
+   The chatbot uses an MCP server for task management tools.
+   ```bash
+   cd backend
+   python mcp_server.py
+   ```
 
-This project is licensed under the MIT License.
+3. **Start the Backend**:
+   In a separate terminal:
+   ```bash
+   cd backend
+   python main.py
+   ```
 
-## Support
+4. **Start the Frontend**:
+   In another terminal:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
 
-For support, please open an issue in the GitHub repository.
+5. **Interact with the Chatbot**:
+   - Open `http://localhost:3000/dashboard` in your browser.
+   - Click the floating chat icon in the bottom-right corner.
+   - Try commands like:
+     - "Add a task to buy groceries tonight"
+     - "Show me my pending tasks"
+     - "Mark task [id] as complete"
+     - "Delete task [id]"
+
+### Tech Stack (Phase III)
+- **OpenAI ChatKit**: Modern UI for conversational AI.
+- **OpenAI Agents SDK**: Intelligent tool orchestration.
+- **Official MCP SDK**: Stateless protocol for exposing Python tools to AI agents.
+- **Conversation State**: History persisted in PostgreSQL via `Conversation` and `Message` models.
+
+---
+
+Built with ❤️ using Next.js, FastAPI, and PostgreSQL
+

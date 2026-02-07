@@ -6,7 +6,7 @@ This module implements user registration, login, logout, and token refresh endpo
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security.http import HTTPAuthorizationCredentials
-from ..middleware.auth import security
+from middleware.auth import security
 from fastapi import HTTPException, status
 from datetime import datetime, timedelta
 from typing import Optional
@@ -14,14 +14,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from jose import jwt
 import uuid
-from ..models import User, RefreshToken
-from ..schemas import (
+from models import User, RefreshToken
+from schemas import (
     UserRegisterRequest, UserLoginRequest, TokenRefreshRequest,
     LoginResponse, TokenResponse, LogoutResponse, TokenRefreshResponse, UserResponse
 )
-from ..database import get_async_session
-from ..utils.password import hash_password, verify_password
-from ..middleware.auth import create_access_token, verify_token
+from database import get_async_session
+from utils.password import hash_password, verify_password
+from middleware.auth import create_access_token, verify_token
 import os
 import hashlib
 
@@ -117,10 +117,21 @@ async def login(login_data: UserLoginRequest, db: AsyncSession = Depends(get_asy
     Authenticate user and return JWT tokens.
     """
     # Find user by email
+    print(f"DEBUG: Login attempt - Email: '{login_data.email}'")
     user_result = await db.execute(select(User).filter(User.email == login_data.email))
     user = user_result.scalar_one_or_none()
 
-    if not user or not verify_password(login_data.password, user.password_hash):
+    if not user:
+        print(f"DEBUG: User not found: '{login_data.email}'")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials"
+        )
+        
+    is_valid = verify_password(login_data.password, user.password_hash)
+    print(f"DEBUG: Password check for '{login_data.email}': {is_valid} (Length: {len(login_data.password)})")
+    
+    if not is_valid:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials"

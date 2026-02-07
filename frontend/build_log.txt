@@ -1,0 +1,72 @@
+
+> frontend@0.1.0 build
+> next build
+
+ΓÜá `images.domains` is deprecated in favor of `images.remotePatterns`. Please update next.config.js to protect your application from malicious users.
+ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\frontend\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./frontend/app/tasks/[id]/page.tsx:5:1
+Module not found: Can't resolve '../../lib/api'
+  3 | import { useState, useEffect } from 'react';
+  4 | import { useParams, useRouter } from 'next/navigation';
+> 5 | import { apiClient } from '../../lib/api';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { TaskForm } from '../../src/components/tasks/TaskForm';
+  7 |
+  8 | export default function TaskDetailPage() {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./frontend/app/tasks/[id]/page.tsx [Client Component Browser]
+    ./frontend/app/tasks/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./frontend/app/tasks/[id]/page.tsx [Client Component SSR]
+    ./frontend/app/tasks/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./frontend/app/tasks/[id]/page.tsx:6:1
+Module not found: Can't resolve '../../src/components/tasks/TaskForm'
+  4 | import { useParams, useRouter } from 'next/navigation';
+  5 | import { apiClient } from '../../lib/api';
+> 6 | import { TaskForm } from '../../src/components/tasks/TaskForm';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 |
+  8 | export default function TaskDetailPage() {
+  9 |   const { id } = useParams();
+
+
+
+Import traces:
+  Client Component Browser:
+    ./frontend/app/tasks/[id]/page.tsx [Client Component Browser]
+    ./frontend/app/tasks/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./frontend/app/tasks/[id]/page.tsx [Client Component SSR]
+    ./frontend/app/tasks/[id]/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./frontend/app/tasks/[id]/page.tsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./frontend/app/tasks/[id]/page.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file c:\ws\deps\uv\src\win\async.c, line 76

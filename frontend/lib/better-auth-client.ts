@@ -4,6 +4,8 @@
 // In a real implementation, we would use the actual Better Auth client library
 // For this implementation, we'll create a proper client that integrates with our backend API
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 interface User {
   id: string;
   email: string;
@@ -56,10 +58,10 @@ class BetterAuthClient {
     }
   }
 
-  // Login function - calls backend auth API
   async signIn(email: string, password: string): Promise<{ user: User; token: string } | null> {
+    console.log(`DEBUG: Frontend signIn - Email: '${email}', Password Length: ${password.length}`);
     try {
-      const response = await fetch('/api/v1/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,15 +70,28 @@ class BetterAuthClient {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Login failed');
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          // Log as warning instead of error to avoid confusion
+          console.warn(`Authentication failed: ${errorData.detail}`);
+          throw new Error('Incorrect email or password. Please try again.');
+        } else {
+          const text = await response.text();
+          console.error('Login failed with non-JSON response:', text.substring(0, 200));
+          throw new Error(`Login failed: Server returned ${response.status} ${response.statusText}`);
+        }
       }
 
       const data = await response.json();
 
       // Update internal state
       this.state = {
-        user: { id: data.user_id || 'unknown', email, name: data.name || email.split('@')[0] },
+        user: {
+          id: data.user.id || 'unknown',
+          email: data.user.email,
+          name: data.user.first_name || email.split('@')[0]
+        },
         token: data.access_token,
         isAuthenticated: true,
       };
@@ -87,7 +102,7 @@ class BetterAuthClient {
         localStorage.setItem('user', JSON.stringify(this.state.user));
       }
 
-      return { user: this.state.user, token: data.access_token };
+      return { user: this.state.user!, token: data.access_token };
     } catch (error: any) {
       console.error('Login failed:', error);
       throw error;
@@ -95,26 +110,42 @@ class BetterAuthClient {
   }
 
   // Signup function - calls backend auth API
-  async signUp(email: string, password: string, name?: string): Promise<{ user: User; token: string } | null> {
+  async signUp(email: string, password: string, firstName?: string, lastName?: string): Promise<{ user: User; token: string } | null> {
     try {
-      const response = await fetch('/api/v1/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({
+          email,
+          password,
+          first_name: firstName,
+          last_name: lastName
+        }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Signup failed');
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || 'Signup failed');
+        } else {
+          const text = await response.text();
+          console.error('Signup failed with non-JSON response:', text.substring(0, 200));
+          throw new Error(`Signup failed: Server returned ${response.status} ${response.statusText}`);
+        }
       }
 
       const data = await response.json();
 
       // Update internal state
       this.state = {
-        user: { id: data.user_id || 'unknown', email, name },
+        user: {
+          id: data.user.id || 'unknown',
+          email: data.user.email,
+          name: data.user.first_name || firstName || email.split('@')[0]
+        },
         token: data.access_token,
         isAuthenticated: true,
       };
@@ -125,7 +156,7 @@ class BetterAuthClient {
         localStorage.setItem('user', JSON.stringify(this.state.user));
       }
 
-      return { user: this.state.user, token: data.access_token };
+      return { user: this.state.user!, token: data.access_token };
     } catch (error: any) {
       console.error('Signup failed:', error);
       throw error;

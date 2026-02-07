@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"\nimport sys\nimport os\nsys.path.insert\\(0, os.path.abspath\\(''.''\\)\\)\n\ntry:\n    import main\n    print\\(''Successfully imported main module''\\)\n    \n    # Try to run with uvicorn\n    import uvicorn\n    print\\(''Starting server...''\\)\n    uvicorn.run\\(\n        main.app,\n        host=''0.0.0.0'',\n        port=8000,\n        reload=False,\n        log_level=''info''\n    \\)\nexcept ImportError as e:\n    print\\(f''Import error: {e}''\\)\n    import traceback\n    traceback.print_exc\\(\\)\nexcept Exception as e:\n    print\\(f''Error: {e}''\\)\n    import traceback\n    traceback.print_exc\\(\\)\n\")",
+      "Bash(pip install:*)",
+      "Bash(python -c:*)",
+      "Bash(npm run dev)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm install)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(python -m uvicorn:*)",
+      "Bash(python -m pip install:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(timeout 10 curl http://127.0.0.1:8000/)",
+      "Bash(python comprehensive_test.py:*)"
+    ]
+  }
+}

@@ -52,28 +52,29 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete, onRefresh }: TaskC
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'bg-green-100 text-green-800';
+        return 'bg-pink-100 text-pink-700 dark:bg-pink-950/30 dark:text-pink-400';
       case 'in_progress':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-stone-100 text-stone-700 dark:bg-stone-900 dark:text-stone-400';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-stone-100 text-stone-600';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high':
-        return 'bg-red-100 text-red-800';
+        return 'bg-pink-200 text-pink-900 dark:bg-pink-900/50 dark:text-pink-100';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-amber-200 text-amber-900 dark:bg-amber-900/50 dark:text-amber-100';
       case 'low':
-        return 'bg-green-100 text-green-800';
+        return 'bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-stone-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-stone-100 text-stone-600';
     }
   };
+
 
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
@@ -85,38 +86,39 @@ const TaskCard = ({ task, onToggleComplete, onEdit, onDelete, onRefresh }: TaskC
   };
 
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-md">
+    <Card className="overflow-hidden transition-all hover:shadow-lg border-border bg-card group">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
             <Checkbox
               checked={task.status === 'completed'}
               onCheckedChange={handleToggleComplete}
+              className="border-primary data-[state=checked]:bg-primary"
               aria-label={`Mark task ${task.title} as ${task.status === 'completed' ? 'incomplete' : 'complete'}`}
             />
             <div>
               <h3
-                className={`text-lg font-semibold ${
-                  task.status === 'completed' ? 'line-through text-gray-500' : 'text-gray-900'
-                }`}
+                className={`text-lg font-black tracking-tight transition-colors ${task.status === 'completed' ? 'line-through text-muted-foreground/50' : 'text-foreground'
+                  }`}
               >
                 {task.title}
               </h3>
               {task.description && (
-                <p className="text-sm text-gray-600 mt-1">{task.description}</p>
+                <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{task.description}</p>
               )}
             </div>
           </div>
-          <div className="flex space-x-1">
-            <Badge className={getStatusColor(task.status)}>
+          <div className="flex flex-col items-end gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
+            <Badge className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border-none shadow-none ${getStatusColor(task.status)}`}>
               {task.status.replace('_', ' ')}
             </Badge>
-            <Badge className={getPriorityColor(task.priority)}>
+            <Badge className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 border-none shadow-none ${getPriorityColor(task.priority)}`}>
               {task.priority}
             </Badge>
           </div>
         </div>
       </CardHeader>
+
 
       <CardContent className="pb-2">
         {task.due_date && (
