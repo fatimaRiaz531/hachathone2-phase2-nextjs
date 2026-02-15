@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import and_, or_, func
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List
 import uuid
 from models import Task, User
@@ -17,7 +17,7 @@ from schemas import (
     TaskResponse, TaskListResponse
 )
 from database import get_async_session
-from middleware.auth import get_current_user
+from middleware.auth import get_current_user, debug_log
 
 # Create router for task endpoints
 router = APIRouter()
@@ -109,12 +109,20 @@ async def update_task(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_async_session)
 ):
-    """Full update of a task."""
+    debug_log(f"DEBUG TASK: PUT /tasks/{task_id} for user {current_user.id}")
     query = select(Task).where(Task.id == task_id, Task.user_id == current_user.id)
     result = await db.execute(query)
     task = result.scalar_one_or_none()
 
     if not task:
+        # Check if task exists for ANY user to debug ownership
+        all_query = select(Task).where(Task.id == task_id)
+        all_result = await db.execute(all_query)
+        any_task = all_result.scalar_one_or_none()
+        if any_task:
+            debug_log(f"DEBUG TASK: Task {task_id} exists but belongs to user {any_task.user_id}")
+        else:
+            debug_log(f"DEBUG TASK: Task {task_id} NOT FOUND in database at all")
         raise HTTPException(status_code=404, detail="Task not found")
 
     task.title = task_data.title
@@ -167,12 +175,13 @@ async def delete_task(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_async_session)
 ):
-    """Delete a task."""
+    debug_log(f"DEBUG TASK: DELETE /tasks/{task_id} for user {current_user.id}")
     query = select(Task).where(Task.id == task_id, Task.user_id == current_user.id)
     result = await db.execute(query)
     task = result.scalar_one_or_none()
 
     if not task:
+        debug_log(f"DEBUG TASK: DELETE 404 for {task_id}")
         raise HTTPException(status_code=404, detail="Task not found")
 
     await db.delete(task)

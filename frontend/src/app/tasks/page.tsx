@@ -11,8 +11,10 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { Pagination } from '@/components/common/Pagination';
 import { Task } from '@/lib/types';
 import { tasksApi } from '@/lib/api/tasks';
+import { useAuth } from '@clerk/nextjs';
 
 const TasksPage = () => {
+  const { isLoaded, getToken } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -36,6 +38,9 @@ const TasksPage = () => {
       try {
         setLoading(true);
 
+        const token = await getToken();
+        tasksApi.setToken(token);
+
         const params = {
           page: currentPage,
           size: 10, // 10 tasks per page
@@ -57,11 +62,16 @@ const TasksPage = () => {
       }
     };
 
-    fetchTasks();
-  }, [currentPage, filters, sort]);
+    if (isLoaded) {
+      fetchTasks();
+    }
+  }, [isLoaded, currentPage, filters, sort]);
 
   const handleCreateTask = async (taskData: Omit<Task, 'id' | 'created_at' | 'updated_at' | 'user_id'>) => {
     try {
+      const token = await getToken();
+      tasksApi.setToken(token);
+
       const newTask = await tasksApi.createTask(taskData);
       setTasks([newTask, ...tasks]);
       setShowTaskForm(false);
@@ -73,8 +83,11 @@ const TasksPage = () => {
     }
   };
 
-  const handleUpdateTask = async (taskData: Partial<Task> & { id: number }) => {
+  const handleUpdateTask = async (taskData: Partial<Task> & { id: string }) => {
     try {
+      const token = await getToken();
+      tasksApi.setToken(token);
+
       const updatedTask = await tasksApi.updateTask(taskData.id, taskData);
       setTasks(tasks.map(t => t.id === taskData.id ? updatedTask : t));
       setShowTaskForm(false);
@@ -84,10 +97,13 @@ const TasksPage = () => {
     }
   };
 
-  const handleToggleComplete = async (id: number) => {
+  const handleToggleComplete = async (id: string) => {
     try {
       const taskToToggle = tasks.find(t => t.id === id);
       if (!taskToToggle) return;
+
+      const token = await getToken();
+      tasksApi.setToken(token);
 
       const updatedTask = await tasksApi.patchTask(id, { completed: !taskToToggle.completed });
       setTasks(tasks.map(t => t.id === id ? updatedTask : t));
@@ -101,9 +117,12 @@ const TasksPage = () => {
     setShowTaskForm(true);
   };
 
-  const handleDeleteTask = async (id: number) => {
+  const handleDeleteTask = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
+        const token = await getToken();
+        tasksApi.setToken(token);
+
         await tasksApi.deleteTask(id);
         setTasks(tasks.filter(t => t.id !== id));
 
@@ -139,17 +158,17 @@ const TasksPage = () => {
           <TaskFilters
             statusFilter={filters.status}
             setStatusFilter={(status) => {
-              setFilters({...filters, status});
+              setFilters({ ...filters, status });
               setCurrentPage(1); // Reset to first page when filters change
             }}
             priorityFilter={filters.priority}
             setPriorityFilter={(priority) => {
-              setFilters({...filters, priority});
+              setFilters({ ...filters, priority });
               setCurrentPage(1); // Reset to first page when filters change
             }}
             searchQuery={filters.search}
             setSearchQuery={(search) => {
-              setFilters({...filters, search});
+              setFilters({ ...filters, search });
               setCurrentPage(1); // Reset to first page when search changes
             }}
           />
@@ -157,12 +176,12 @@ const TasksPage = () => {
           <TaskSortControls
             sortBy={sort.sortBy}
             setSortBy={(sortBy) => {
-              setSort({...sort, sortBy});
+              setSort({ ...sort, sortBy });
               setCurrentPage(1); // Reset to first page when sorting changes
             }}
             sortOrder={sort.sortOrder}
             setSortOrder={(sortOrder) => {
-              setSort({...sort, sortOrder});
+              setSort({ ...sort, sortOrder });
               setCurrentPage(1); // Reset to first page when sorting changes
             }}
           />
@@ -193,7 +212,7 @@ const TasksPage = () => {
         >
           <TaskForm
             task={editingTask || undefined}
-            onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+            onSuccess={editingTask ? handleUpdateTask : handleCreateTask}
             onCancel={() => {
               setShowTaskForm(false);
               setEditingTask(null);

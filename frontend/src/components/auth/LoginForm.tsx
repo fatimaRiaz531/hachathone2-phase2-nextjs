@@ -116,15 +116,15 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
             id="remember-me"
             name="remember-me"
             type="checkbox"
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
           />
-          <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+          <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
             Remember me
           </label>
         </div>
 
         <div className="text-sm">
-          <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <a href="#" className="font-medium text-primary hover:text-primary/80">
             Forgot your password?
           </a>
         </div>

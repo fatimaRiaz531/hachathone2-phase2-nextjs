@@ -15,7 +15,10 @@ from typing import AsyncGenerator
 from settings import settings
 
 # Database URL configuration
+# Database URL configuration
 DATABASE_URL = settings.database_url
+if DATABASE_URL and "sslmode" in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.replace("?sslmode=require", "").replace("&sslmode=require", "")
 
 
 # Create async engine for application operations

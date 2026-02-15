@@ -147,9 +147,11 @@ const SelectItem = ({ className, children, value, ...props }: SelectItemProps) =
   );
 };
 
-interface SelectValueProps extends React.ComponentProps<'span'> { }
+interface SelectValueProps extends React.ComponentProps<'span'> {
+  placeholder?: string;
+}
 
-const SelectValue = ({ className, ...props }: SelectValueProps) => {
+const SelectValue = ({ className, placeholder, ...props }: SelectValueProps) => {
   const { value } = useSelect();
 
   // Format the value for display (e.g., "in_progress" -> "In Progress")
@@ -157,7 +159,11 @@ const SelectValue = ({ className, ...props }: SelectValueProps) => {
 
   return (
     <span className={cn("block truncate", className)} {...props}>
-      {displayValue || <span className="text-muted-foreground font-medium opacity-50 italic">Select an option...</span>}
+      {displayValue || (
+        <span className="text-muted-foreground font-medium opacity-50 italic">
+          {placeholder || "Select an option..."}
+        </span>
+      )}
     </span>
   );
 };

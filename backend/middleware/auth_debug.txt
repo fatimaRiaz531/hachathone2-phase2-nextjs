@@ -1,0 +1,856 @@
+[2026-02-15 11:12:42] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:16:31] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:16:34] DEBUG AUTH: main.py loaded
+[2026-02-15 11:16:58] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:17:01] DEBUG AUTH: main.py loaded
+[2026-02-15 11:17:24] DEBUG MIDDLEWARE: Request GET /api/v1/debug/auth
+[2026-02-15 11:17:24] DEBUG MIDDLEWARE: Skipping auth for /api/v1/debug/auth
+[2026-02-15 11:17:24] DEBUG AUTH: Diagnostic route hit
+[2026-02-15 11:18:14] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-15 11:18:14] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:18:14] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:18:14] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:18:14] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:18:35] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:18:35] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:18:35] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:18:38] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:18:38] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:18:38] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:18:39] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:39] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:39] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:39] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:39] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:18:46] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:46] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:18:46] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:19:13] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-15 11:19:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:19:13] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:19:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:19:13] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:19:13] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:19:13] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:19:14] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Not Found
+[2026-02-15 11:19:14] AUTO-PROVISION: Creating new user: user_user_39N@clerk.dev (user_39NyvTMSW5d1Yeo98ks5shJbNvH)
+[2026-02-15 11:19:15] DEBUG AUTH: UNEXPECTED ERROR: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 14... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 14, 336180, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 14, 336180, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+Traceback (most recent call last):
+  File "asyncpg/protocol/prepared_stmt.pyx", line 175, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+  File "asyncpg/protocol/codecs/base.pyx", line 251, in asyncpg.protocol.protocol.Codec.encode
+  File "asyncpg/protocol/codecs/base.pyx", line 153, in asyncpg.protocol.protocol.Codec.encode_scalar
+  File "asyncpg/pgproto/codecs/datetime.pyx", line 152, in asyncpg.pgproto.pgproto.timestamp_encode
+TypeError: can't subtract offset-naive and offset-aware datetimes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 184, in bind_execute
+  File "asyncpg/protocol/prepared_stmt.pyx", line 204, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+asyncpg.exceptions.DataError: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 14... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.Error: <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 14... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 168, in get_current_user
+    await db.commit()
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1000, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 14... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 14, 336180, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 14, 336180, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+
+[2026-02-15 11:19:23] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:19:23] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:19:23] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:19:23] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:19:23] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:19:24] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Not Found
+[2026-02-15 11:19:24] AUTO-PROVISION: Creating new user: user_user_39N@clerk.dev (user_39NyvTMSW5d1Yeo98ks5shJbNvH)
+[2026-02-15 11:19:24] DEBUG AUTH: UNEXPECTED ERROR: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 24... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 24, 241917, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 24, 241917, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+Traceback (most recent call last):
+  File "asyncpg/protocol/prepared_stmt.pyx", line 175, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+  File "asyncpg/protocol/codecs/base.pyx", line 251, in asyncpg.protocol.protocol.Codec.encode
+  File "asyncpg/protocol/codecs/base.pyx", line 153, in asyncpg.protocol.protocol.Codec.encode_scalar
+  File "asyncpg/pgproto/codecs/datetime.pyx", line 152, in asyncpg.pgproto.pgproto.timestamp_encode
+TypeError: can't subtract offset-naive and offset-aware datetimes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 184, in bind_execute
+  File "asyncpg/protocol/prepared_stmt.pyx", line 204, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+asyncpg.exceptions.DataError: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 24... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.Error: <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 24... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 168, in get_current_user
+    await db.commit()
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1000, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 24... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 24, 241917, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 24, 241917, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+
+[2026-02-15 11:19:30] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:19:30] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:19:30] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:19:30] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:19:30] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:19:31] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Not Found
+[2026-02-15 11:19:31] AUTO-PROVISION: Creating new user: user_user_39N@clerk.dev (user_39NyvTMSW5d1Yeo98ks5shJbNvH)
+[2026-02-15 11:19:31] DEBUG AUTH: UNEXPECTED ERROR: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 31... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 31, 593242, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 31, 593242, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+Traceback (most recent call last):
+  File "asyncpg/protocol/prepared_stmt.pyx", line 175, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+  File "asyncpg/protocol/codecs/base.pyx", line 251, in asyncpg.protocol.protocol.Codec.encode
+  File "asyncpg/protocol/codecs/base.pyx", line 153, in asyncpg.protocol.protocol.Codec.encode_scalar
+  File "asyncpg/pgproto/codecs/datetime.pyx", line 152, in asyncpg.pgproto.pgproto.timestamp_encode
+TypeError: can't subtract offset-naive and offset-aware datetimes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 184, in bind_execute
+  File "asyncpg/protocol/prepared_stmt.pyx", line 204, in asyncpg.protocol.protocol.PreparedStatementState._encode_bind_msg
+asyncpg.exceptions.DataError: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 31... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.Error: <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 31... (can't subtract offset-naive and offset-aware datetimes)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 168, in get_current_user
+    await db.commit()
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 1000, in commit
+    await greenlet_spawn(self.sync_session.commit)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+        statement, multiparams, execution_options=execution_options
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.DataError'>: invalid input for query argument $7: datetime.datetime(2026, 2, 15, 6, 19, 31... (can't subtract offset-naive and offset-aware datetimes)
+[SQL: INSERT INTO users (email, first_name, last_name, is_active, id, password_hash, created_at, updated_at) VALUES ($1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::BOOLEAN, $5::VARCHAR, $6::VARCHAR, $7::TIMESTAMP WITHOUT TIME ZONE, $8::TIMESTAMP WITHOUT TIME ZONE)]
+[parameters: ('user_user_39N@clerk.dev', 'User', '', True, 'user_39NyvTMSW5d1Yeo98ks5shJbNvH', None, datetime.datetime(2026, 2, 15, 6, 19, 31, 593242, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 2, 15, 6, 19, 31, 593242, tzinfo=datetime.timezone.utc))]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+
+[2026-02-15 11:20:14] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:20:17] DEBUG AUTH: main.py loaded
+[2026-02-15 11:20:29] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:20:32] DEBUG AUTH: main.py loaded
+[2026-02-15 11:21:00] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:21:00] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:21:00] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:21:09] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:21:09] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:21:09] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:21:25] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:21:25] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:21:25] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:21:25] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:21:25] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:21:26] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Not Found
+[2026-02-15 11:21:26] AUTO-PROVISION: Creating new user: user_user_39N@clerk.dev (user_39NyvTMSW5d1Yeo98ks5shJbNvH)
+[2026-02-15 11:21:29] AUTO-PROVISION: Success for user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:22:49] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:22:52] DEBUG AUTH: main.py loaded
+[2026-02-15 11:23:03] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:23:06] DEBUG AUTH: main.py loaded
+[2026-02-15 11:23:36] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:23:39] DEBUG AUTH: main.py loaded
+[2026-02-15 11:23:49] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:23:52] DEBUG AUTH: main.py loaded
+[2026-02-15 11:24:10] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:24:10] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:24:10] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:24:16] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:24:16] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:24:16] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:24:32] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:24:32] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:24:32] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:24:32] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:24:32] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:24:33] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:24:45] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:24:45] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:24:45] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:24:45] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:24:45] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:24:45] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:24:45] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:24:47] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:25:25] DEBUG MIDDLEWARE: Request PUT /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:25:25] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/37539cab-0c50-4ebf-bd32-ffa88f01d906
+[2026-02-15 11:25:25] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:25:25] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:25:25] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:25:27] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:29:27] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-15 11:29:30] DEBUG AUTH: main.py loaded
+[2026-02-15 11:29:58] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-15 11:29:58] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:29:58] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:29:58] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:29:58] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:30:04] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:04] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:04] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:04] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:04] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:30:13] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-15 11:30:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:30:13] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:30:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:30:13] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:30:13] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:30:13] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:30:14] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:30:24] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/974de426-81b4-4a03-ab1c-a2c699ac222c
+[2026-02-15 11:30:24] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/974de426-81b4-4a03-ab1c-a2c699ac222c
+[2026-02-15 11:30:24] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/974de426-81b4-4a03-ab1c-a2c699ac222c
+[2026-02-15 11:30:24] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/974de426-81b4-4a03-ab1c-a2c699ac222c
+[2026-02-15 11:30:24] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:30:24] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:30:24] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:30:26] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:30:26] DEBUG TASK: DELETE /tasks/974de426-81b4-4a03-ab1c-a2c699ac222c for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:30:26] DEBUG TASK: DELETE 404 for 974de426-81b4-4a03-ab1c-a2c699ac222c
+[2026-02-15 11:30:52] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:30:52] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:30:52] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:30:56] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:30:56] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:30:56] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:30:56] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:56] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:30:56] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:31:00] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:31:00] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:31:00] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:31:03] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:31:03] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:31:03] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:03] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:03] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:05] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:31:15] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:15] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:15] DEBUG MIDDLEWARE: Request PUT /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:15] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:15] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:15] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:15] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:17] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:31:17] DEBUG TASK: PUT /tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77 for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:30] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:30] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:30] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:30] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:30] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:32] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:31:32] DEBUG TASK: DELETE /tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77 for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:36] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:36] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:36] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:36] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:36] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:31:38] DEBUG TASK: DELETE /tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77 for user user_test_123
+[2026-02-15 11:31:38] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:38] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:38] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:38] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:38] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:38] DEBUG TASK: DELETE 404 for e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:39] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:31:42] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:42] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:42] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:42] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:42] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:43] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:31:43] DEBUG TASK: DELETE /tasks/e7faa3b6-b566-4d68-9473-a3d42c705b77 for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:44] DEBUG TASK: DELETE 404 for e7faa3b6-b566-4d68-9473-a3d42c705b77
+[2026-02-15 11:31:56] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/chat
+[2026-02-15 11:31:56] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-15 11:31:56] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-15 11:31:56] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-15 11:31:56] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:31:56] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:31:56] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:31:58] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:36:13] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:36:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:36:13] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:17] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-15 11:36:17] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:36:17] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:17] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:36:17] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:36:17] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:24] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-15 11:36:24] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-15 11:36:24] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:36:24] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:36:24] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:36:26] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:36:27] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-15 11:36:27] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-15 11:36:28] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:30] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:30] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:30] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:30] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:30] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:36:30] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:36:30] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:36:32] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:36:34] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:34] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:34] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:36:34] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:36:34] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:36:35] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:35] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:35] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:35] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:35] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:36] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-15 11:36:36] DEBUG TASK: DELETE /tasks/d19e8c38-be39-4f80-bc57-600a9e257519 for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:36:40] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:40] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:40] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-15 11:36:42] DEBUG TASK: DELETE /tasks/d19e8c38-be39-4f80-bc57-600a9e257519 for user user_test_123
+[2026-02-15 11:36:42] DEBUG TASK: DELETE 404 for d19e8c38-be39-4f80-bc57-600a9e257519
+[2026-02-15 11:36:52] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-15 11:36:52] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-15 11:36:52] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-15 11:36:52] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-15 11:36:52] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-15 11:36:53] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found

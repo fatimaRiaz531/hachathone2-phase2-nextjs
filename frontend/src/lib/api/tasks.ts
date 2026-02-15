@@ -2,6 +2,10 @@ import { apiClient } from './client';
 import { Task, PaginatedResponse } from '@/lib/types';
 
 class TasksApi {
+  setToken(token: string | null) {
+    apiClient.setToken(token);
+  }
+
   async getAllTasks(params?: {
     page?: number;
     size?: number;

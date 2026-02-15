@@ -1,188 +1,85 @@
-# Evolution of Todo: Project Overview and Specifications
+# Phase III — AI-Powered Todo Chatbot
 
-## Project Overview
+**Current Phase:** III — AI-Powered Todo Chatbot
 
-### Project Name
-Evolution of Todo
+**Purpose**
 
-### Project Phases
-This project consists of two distinct phases:
-1. **Phase I**: Console-based Todo application with in-memory storage
-2. **Phase II**: Full-stack web application with authentication and database persistence
+- Add a conversational interface powered by OpenAI ChatKit and the Agents SDK which exposes MCP tools to allow natural-language task management (create/list/update/complete/delete).
+- Keep the chat HTTP endpoint stateless: conversation context is persisted in the DB and reconstructed by the backend when needed; each request contains a single user prompt and optional conversation identifier.
 
-### Core Objective
-To demonstrate spec-driven development methodology by building a simple console-based todo application that evolves into a full-featured, multi-user web application following clean architecture principles.
+**New Stack (Phase III)**
 
-## Phase I: Console-Based Todo Application
+- OpenAI ChatKit — primary LLM/chat orchestration and toolkit for building chat experiences.
+- Agents SDK — orchestration layer that routes model decisions to MCP tools and external actions.
+- MCP SDK — defines Tool interfaces (mcp tools) implemented by our backend to mutate/query tasks.
+- Backend: FastAPI (existing) + MCP endpoints that the Agents/ChatKit call as tools.
+- DB: SQLModel / PostgreSQL (existing) with new `Conversation` and `Message` models to persist chat history and enable stateless endpoint reconstruction.
 
-### Technology Stack
-- **Language**: Python 3.13+
-- **Storage**: In-memory (no persistent storage)
-- **Interface**: Console-based menu system
-- **Build Tool**: UV
+**High-Level Goals**
 
-### Core Features
-1. **Add Task**: Create new tasks with title and optional description
-2. **View Tasks**: Display all tasks with completion status
-3. **Update Task**: Modify existing task title or description
-4. **Delete Task**: Remove tasks from the system
-5. **Mark Complete/Incomplete**: Toggle task completion status
+- Provide an intuitive, natural-language interface to manage tasks inside the existing Todo application.
+- Keep the chat endpoint stateless; reconstruct full context for Agents/ChatKit via DB lookups.
+- Expose a small set of robust MCP tools that the Agent uses to perform task operations.
+- Ensure atomic operations, idempotency where appropriate, and clear error handling and confirmation UX.
+- Instrument rate limits and scopes for security and reliability.
 
-### Technical Constraints
-- Data stored in memory only (lost on application exit)
-- Console-based user interface
-- No external dependencies beyond Python standard library
-- Follows clean architecture principles
+**High-level Architecture (ASCII diagram)**
 
-### User Interface Flow
-- Menu-driven system with numbered options
-- Clear prompts for user input
-- Input validation and error handling
-- Help/usage instructions
+```
+[Client App / Web UI]
+       |
+       |  POST /api/chat (prompt + optional conversation_id)
+       v
+[FastAPI Chat Endpoint - Stateless]
+  - Validate auth
+  - Load Conversation & recent Messages from DB (if conversation_id)
+  - Build system + user context
+  - Call OpenAI ChatKit / Agents SDK (stateless call)
+       |  (Agents may request MCP tool calls via MCP SDK)
+       v
+  - MCP tool calls -> Internal REST MCP endpoints (add/list/update/delete/complete)
+  - Persist Agent + Tool call results as Messages
+  - Return final assistant message to client
+       |
+       v
+[Postgres DB] <-> [Task Service / Task Table]
 
-## Phase II: Full-Stack Web Application
+```
 
-### Technology Stack
-#### Frontend
-- **Framework**: Next.js 16+ (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS or equivalent
-- **Authentication**: Better Auth integration
+**Stateless Chat Endpoint — Core Principle**
 
-#### Backend
-- **Framework**: FastAPI
-- **ORM**: SQLModel
-- **Database**: PostgreSQL (Neon)
-- **Authentication**: JWT-based with shared secrets
+- The chat endpoint accepts one request per HTTP call (a single user prompt plus optional `conversation_id`).
+- The backend reconstructs the necessary history and metadata by loading the latest messages for the conversation from the DB and providing that to ChatKit/Agents as context.
+- Tools invoked by the Agent are implemented as MCP endpoints inside the same backend (or an internal task service). All tool calls are persisted as `Message` records for auditability and replay.
+- The endpoint itself does not hold in-memory conversations across requests.
 
-### Core Features
-1. **User Authentication**: Registration, login, and logout functionality
-2. **Multi-User Support**: Each user sees only their own tasks
-3. **Full Task Management**: All Phase I features via REST API
-4. **Secure API**: JWT authentication for all endpoints
-5. **Responsive UI**: Works across desktop, tablet, and mobile devices
+**Atomicity & Idempotency**
 
-### API Endpoints
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User authentication
-- `POST /auth/logout` - User session termination
-- `GET /{user_id}/tasks` - Retrieve user's tasks
-- `POST /{user_id}/tasks` - Create new task for user
-- `GET /{user_id}/tasks/{id}` - Retrieve specific task
-- `PUT /{user_id}/tasks/{id}` - Update task
-- `DELETE /{user_id}/tasks/{id}` - Delete task
-- `PATCH /{user_id}/tasks/{id}/complete` - Update completion status
+- Tool operations that mutate data are designed to be atomic at the DB transaction level.
+- All mutating MCP calls accept an optional `client_request_id` for idempotency; if provided the backend deduplicates requests with the same `client_request_id` and returns the original result.
 
-### Database Schema
-#### Users Table
-- id (UUID, Primary Key)
-- email (VARCHAR, Unique)
-- name (VARCHAR)
-- password_hash (VARCHAR)
-- created_at (TIMESTAMP)
-- updated_at (TIMESTAMP)
-- is_active (BOOLEAN)
+**Phase III Acceptance Criteria (high-level)**
 
-#### Tasks Table
-- id (INTEGER, Primary Key)
-- title (VARCHAR)
-- description (TEXT)
-- completed (BOOLEAN)
-- user_id (UUID, Foreign Key)
-- created_at (TIMESTAMP)
-- updated_at (TIMESTAMP)
+- Engineers can call `POST /api/chat` with a natural-language prompt and receive a meaningful assistant response.
+- The assistant can create, list, update, complete, and delete tasks via the Agent using MCP tools.
+- Each assistant response that performs a mutation includes an explicit, human-readable confirmation message and the persisted task state.
+- Conversation history persists to DB, and subsequent requests with the `conversation_id` include prior messages for context reconstruction.
+- The chat endpoint remains stateless (no in-memory conversation retention across requests).
+- Basic rate limiting and auth scopes applied to MCP tool endpoints.
 
-### Security Features
-- JWT token-based authentication
-- User data isolation (each user sees only their own tasks)
-- Password hashing with bcrypt
-- Input validation and sanitization
-- Protection against common vulnerabilities (XSS, CSRF, SQL injection)
+**Deliverables for Implementation**
 
-## Spec-Driven Development Approach
+- MCP tool definitions and endpoints (see `specs/api/mcp-tools.md`).
+- Conversation + Message models and migration (see `specs/database/schema.md`).
+- Chat UX flows and transcripts (see `specs/features/chatbot.md`).
+- Integration test scenarios to validate stateless behavior, idempotency, and tool correctness.
 
-### Specification Hierarchy
-1. **Constitution.md**: Project governance and core principles
-2. **specs/overview.md**: This document
-3. **specs/features/*.md**: Feature-specific requirements
-4. **specs/api/*.md**: API contract definitions
-5. **specs/database/schema.md**: Database schema definitions
-6. **specs/ui/*.md**: User interface specifications
+**Tech Notes (short)**
 
-### Implementation Rules
-- All code must be based on approved specifications
-- Changes to implementation require spec updates first
-- Code must match specifications exactly
-- API contracts are binding requirements
+- Use OpenAI ChatKit as the chat orchestration engine; Agents SDK drives tool calling decisions.
+- Use MCP SDK to standardize tool signatures and payloads; backend implements these MCP tools as REST endpoints.
+- Persist all tool call inputs/outputs as `Message` rows for traceability and debugging.
 
-## Architecture Principles
+---
 
-### Clean Architecture
-- Separation of concerns between business logic, data access, and presentation layers
-- Dependency inversion principle
-- Business rules independent of frameworks and UI concerns
-- Testability of business logic without external dependencies
-
-### Security-First Approach
-- Authentication and authorization at every API endpoint
-- Input validation and sanitization
-- Protection against common vulnerabilities
-- Secure session management
-
-### Quality Assurance
-- Automated testing at unit, integration, and end-to-end levels
-- Code reviews required for all changes
-- Continuous integration and deployment practices
-
-## Development Workflow
-
-### Phase I Implementation
-1. Create Phase-I feature specifications
-2. Implement console-based application
-3. Test all core functionality
-4. Verify compliance with specifications
-
-### Phase II Implementation
-1. Create API, database, and UI specifications
-2. Implement backend with FastAPI and SQLModel
-3. Implement frontend with Next.js
-4. Integrate authentication system
-5. Test full application flow
-6. Verify compliance with all specifications
-
-## Success Criteria
-
-### Phase I Success Metrics
-- All 5 core features implemented and working
-- Console interface functional and user-friendly
-- Error handling implemented for all scenarios
-- Code follows Python best practices
-
-### Phase II Success Metrics
-- Full authentication system working
-- All API endpoints functional and secured
-- Responsive UI working across devices
-- Data isolation between users verified
-- Performance requirements met
-- Security requirements satisfied
-
-## Project Governance
-
-### Change Management
-- All changes must start with spec updates
-- Breaking changes require explicit approval
-- Versioning strategy must be maintained
-- Migration paths for data/schema changes
-
-### Quality Standards
-- All code must have appropriate documentation
-- API documentation must match implementation
-- Architecture decisions must be recorded
-- User guides and admin documentation required
-
-## Next Steps
-
-1. Review and approve all specifications
-2. Begin Phase I implementation following feature specifications
-3. Progress to Phase II after Phase I completion
-4. Maintain specification-documentation alignment throughout development
+End of Phase III overview.

@@ -24,15 +24,22 @@ const TaskDetailPage = () => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        const taskId = Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
+        const idStr = Array.isArray(id) ? id[0] : id;
 
+        if (!idStr) {
+          setError('Task ID is missing');
+          setLoading(false);
+          return;
+        }
+
+        const taskId = parseInt(idStr, 10);
         if (isNaN(taskId)) {
           setError('Invalid task ID');
           setLoading(false);
           return;
         }
 
-        const taskData = await tasksApi.getTaskById(taskId);
+        const taskData = await tasksApi.getTaskById(taskId.toString());
         setTask(taskData);
       } catch (err) {
         console.error('Error fetching task:', err);
@@ -252,7 +259,7 @@ const TaskDetailPage = () => {
         >
           <TaskForm
             task={task}
-            onSubmit={handleUpdateTask}
+            onSuccess={handleUpdateTask}
             onCancel={() => setShowEditForm(false)}
           />
         </Modal>

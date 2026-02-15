@@ -6,7 +6,7 @@ import { Button } from '../ui/Button';
 import { Textarea } from '../ui/Textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
 import { Task } from '../../../src/types';
-import { apiClient } from '../../../lib/api';
+import { useClerkApi } from '../../lib/api/clerk-client';
 
 interface TaskFormProps {
   task?: Task;
@@ -15,6 +15,7 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
+  const apiClient = useClerkApi();
   const [formData, setFormData] = useState({
     title: task?.title || '',
     description: task?.description || '',
@@ -109,13 +110,13 @@ const TaskForm = ({ task, onSuccess, onCancel }: TaskFormProps) => {
         priority: formData.priority as 'low' | 'medium' | 'high',
       };
 
-      let result;
+      let result: Task;
       if (task) {
         // Update existing task
-        result = await apiClient.put(`/tasks/${task.id}`, taskData);
+        result = await apiClient.put<Task>(`/tasks/${task.id}`, taskData);
       } else {
         // Create new task
-        result = await apiClient.post('/tasks', taskData);
+        result = await apiClient.post<Task>('/tasks', taskData);
       }
 
       onSuccess(result);

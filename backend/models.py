@@ -1,20 +1,18 @@
 """
 Database models for the Todo Web App using SQLModel.
 
-This module defines the database models for users, tasks, and refresh tokens
+This module defines the database models for users, tasks, and conversations
 following the specifications for the Todo Web App.
 """
 
 from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional, TYPE_CHECKING, List
-from datetime import datetime
+from typing import Optional, List, TYPE_CHECKING
+from datetime import datetime, timezone
 from enum import Enum
 import uuid
 
-
 if TYPE_CHECKING:
     pass
-
 
 # Enums for status and priority
 class TaskStatus(str, Enum):
@@ -37,7 +35,7 @@ class UserBase(SQLModel):
     email: str = Field(
         sa_column_kwargs={"unique": True},
         max_length=255,
-        description="User email address (unique)"
+        description="User email address (unique from Clerk)"
     )
     first_name: Optional[str] = Field(
         default=None,
@@ -59,14 +57,15 @@ class User(UserBase, table=True):
     """User model representing application users."""
     __tablename__ = "users"
 
+    # We use String ID to match Clerk's User ID (e.g., "user_2N...")
     id: str = Field(
-        default_factory=lambda: str(uuid.uuid4()),
         primary_key=True,
-        description="Unique user identifier"
+        description="Unique user identifier (from Clerk)"
     )
-    password_hash: str = Field(
+    password_hash: Optional[str] = Field(
+        default=None,
         max_length=255,
-        description="BCrypt hashed password"
+        description="Not used with Clerk, but kept for legacy/compatibility"
     )
     created_at: datetime = Field(
         default_factory=datetime.utcnow,
@@ -79,15 +78,6 @@ class User(UserBase, table=True):
 
     # Relationship to tasks
     tasks: List["Task"] = Relationship(
-        back_populates="user",
-        sa_relationship_kwargs={
-            "cascade": "all, delete-orphan",
-            "lazy": "selectin"
-        }
-    )
-
-    # Relationship to refresh tokens
-    refresh_tokens: List["RefreshToken"] = Relationship(
         back_populates="user",
         sa_relationship_kwargs={
             "cascade": "all, delete-orphan",
@@ -131,6 +121,10 @@ class TaskBase(SQLModel):
     priority: TaskPriority = Field(
         default=TaskPriority.MEDIUM,
         description="Task priority enum"
+    )
+    completed: bool = Field(
+        default=False,
+        description="Task completion status (Phase III requirement)"
     )
 
 
@@ -218,6 +212,11 @@ class MessageBase(SQLModel):
         index=True,
         description="Parent conversation identifier"
     )
+    user_id: str = Field(
+        foreign_key="users.id",
+        index=True,
+        description="Sender user identifier"
+    )
 
 
 class Message(MessageBase, table=True):
@@ -236,60 +235,3 @@ class Message(MessageBase, table=True):
 
     # Relationship to conversation
     conversation: Conversation = Relationship(back_populates="messages")
-
-
-# Refresh Token model
-class RefreshTokenBase(SQLModel):
-    """Base model for RefreshToken containing common fields."""
-    token_hash: str = Field(
-        max_length=255,
-        description="Hashed refresh token",
-        sa_column_kwargs={"unique": True}
-    )
-    expires_at: datetime = Field(
-        description="Token expiration datetime"
-    )
-    is_revoked: bool = Field(
-        default=False,
-        description="Revocation status"
-    )
-
-
-class RefreshToken(RefreshTokenBase, table=True):
-    """RefreshToken model for storing refresh tokens securely."""
-    __tablename__ = "refresh_tokens"
-
-    id: str = Field(
-        default_factory=lambda: str(uuid.uuid4()),
-        primary_key=True,
-        description="Unique token identifier"
-    )
-    user_id: str = Field(
-        foreign_key="users.id",
-        index=True,
-        description="Associated user"
-    )
-    created_at: datetime = Field(
-        default_factory=datetime.utcnow,
-        description="Creation timestamp"
-    )
-
-    # Relationship to user
-    user: Optional[User] = Relationship(
-        back_populates="refresh_tokens",
-        sa_relationship_kwargs={
-            "lazy": "selectin"
-        }
-    )
-
-
-# Create indexes manually for better control
-def create_indexes():
-    """
-    Create additional indexes that might be needed.
-
-    This function is called during initialization to ensure all necessary indexes exist.
-    """
-    # Indexes are automatically created by SQLModel for foreign keys and primary keys
-    # Additional custom indexes would be added here if needed
-    pass

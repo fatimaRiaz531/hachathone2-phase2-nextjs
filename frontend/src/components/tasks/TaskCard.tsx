@@ -6,7 +6,7 @@ import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { Checkbox } from '../ui/Checkbox';
 import { Task } from '../../../src/types';
-import { apiClient } from '../../../lib/api';
+import { useClerkApi } from '../../lib/api/clerk-client';
 
 interface TaskCardProps {
   task: Task;
@@ -17,6 +17,8 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task, onToggleComplete, onEdit, onDelete, onRefresh }: TaskCardProps) => {
+  const apiClient = useClerkApi();
+
   const handleToggleComplete = async () => {
     try {
       await apiClient.patch(`/tasks/${task.id}`, {

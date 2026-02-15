@@ -48,7 +48,7 @@
 - Frontend: Next.js 16+ with TypeScript
 - Backend: FastAPI with SQLModel
 - Database: PostgreSQL (Neon)
-- Authentication: Better Auth with JWT
+- Authentication: Clerk (managed auth service)
 - Build Tools: UV for Python, npm for JavaScript
 
 ### 8. Phase Requirements

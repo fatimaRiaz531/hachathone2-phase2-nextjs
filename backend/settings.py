@@ -15,6 +15,7 @@ class Settings(BaseSettings):
 
     # JWT settings
     secret_key: str = Field(default="your-super-secret-key-change-in-production", alias="SECRET_KEY")
+    better_auth_jwt_secret: str = Field(default="default-shared-secret-change-me", alias="BETTER_AUTH_JWT_SECRET")
     algorithm: str = Field(default="HS256", alias="ALGORITHM")
     access_token_expire_minutes: int = Field(default=30, alias="ACCESS_TOKEN_EXPIRE_MINUTES")
 

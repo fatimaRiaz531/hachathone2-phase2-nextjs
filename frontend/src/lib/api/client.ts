@@ -2,51 +2,23 @@ import { ApiConfig } from '@/lib/types';
 
 class ApiClient {
   private config: ApiConfig;
+  private token: string | null = null;
 
   constructor(config: ApiConfig) {
     this.config = config;
   }
 
+  public setToken(token: string | null) {
+    this.token = token;
+  }
+
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    // Extract user ID from token if it's a task-related endpoint that requires user_id
-    let normalizedEndpoint = endpoint;
-    const token = this.getAuthToken();
+    const token = this.token;
 
-    if (endpoint.includes('/tasks')) {
-      if (token) {
-        try {
-          // Decode JWT token to get user ID
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          const userId = payload.sub || payload.user_id; // Common claims for user ID
+    // Ensure endpoint has /api/v1 prefix and no double slashes
+    let normalizedEndpoint = endpoint.startsWith('/api/v1') ? endpoint : `/api/v1${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
 
-          if (userId) {
-            // Replace /tasks with /{user_id}/tasks if it's a task-related endpoint
-            if (endpoint.startsWith('/tasks')) {
-              normalizedEndpoint = `/api/v1/${userId}${endpoint}`;
-            } else if (endpoint.includes('/tasks') && !endpoint.match(/\/api\/v1\/[a-f0-9-]{36}\/tasks/)) {
-              // If it's already in the format /api/v1/some_user_id/tasks, don't modify it again
-              // Otherwise, if it contains /tasks but doesn't have a UUID after api/v1, add the user ID
-              normalizedEndpoint = `/api/v1/${userId}${endpoint}`;
-            } else {
-              // If it already has the correct format, just ensure it has /api/v1 prefix
-              normalizedEndpoint = endpoint.startsWith('/api/v1') ? endpoint : `/api/v1${endpoint}`;
-            }
-          }
-        } catch (e) {
-          console.error('Error decoding token to extract user ID:', e);
-          // If we can't decode the token, proceed with the original endpoint
-          normalizedEndpoint = endpoint.startsWith('/api/v1') ? endpoint : `/api/v1${endpoint}`;
-        }
-      } else {
-        // If no token, the request will fail anyway due to authentication
-        normalizedEndpoint = endpoint.startsWith('/api/v1') ? endpoint : `/api/v1${endpoint}`;
-      }
-    } else {
-      // For non-task endpoints, use the standard prefix
-      normalizedEndpoint = endpoint.startsWith('/api/v1') ? endpoint : `/api/v1${endpoint}`;
-    }
-
-    const url = `${this.config.baseUrl}${normalizedEndpoint}`;
+    const url = `${this.config.baseUrl.replace(/\/$/, '')}${normalizedEndpoint}`;
 
     const defaultHeaders = {
       'Content-Type': 'application/json',
@@ -69,20 +41,12 @@ class ApiClient {
       throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
     }
 
-    // Handle responses that don't have JSON bodies (like DELETE requests)
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       return await response.json();
     } else {
       return {} as T;
     }
-  }
-
-  private getAuthToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('token');
-    }
-    return null;
   }
 
   public async get<T>(endpoint: string, params?: Record<string, string>): Promise<T> {

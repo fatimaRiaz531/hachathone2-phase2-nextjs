@@ -1,0 +1,9 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   132    0   130  100     2    395      6 --:--:-- --:--:-- --:--:--   404
+curl: (3) bad range specification in URL position 58:
+model\: \google/gemini-2.0-flash-exp:free\, \messages\: [{\role\: \user\, \content\: \hi\}]}
+                                                         ^
+{"error":{"message":"Input required: specify \"prompt\" or \"messages\"","code":400},"user_id":"user_39KxYt2ElGjDolVIiMGMvOom4Oq"}

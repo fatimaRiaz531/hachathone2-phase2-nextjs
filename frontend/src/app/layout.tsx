@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ChatBot } from "@/components/chat/ChatBot";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "TodoApp - Manage Your Tasks",
@@ -26,25 +16,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className="font-sans antialiased">
           <AuthProvider>
-            <div className="min-h-screen">
-              {children}
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <div className="min-h-screen">
+                {children}
+              </div>
               <ChatBot />
-            </div>
+            </ThemeProvider>
           </AuthProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
 

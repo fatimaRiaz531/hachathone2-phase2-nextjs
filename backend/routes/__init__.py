@@ -1,1 +1,1 @@
-from . import auth, tasks, users
+from . import tasks, users, chat

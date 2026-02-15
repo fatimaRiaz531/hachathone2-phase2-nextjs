@@ -2,68 +2,76 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { betterAuth, User } from './better-auth-client'
+import { useUser, useAuth as useClerkAuth, useClerk } from '@clerk/nextjs'
+
+interface User {
+  id: string
+  email: string
+  firstName?: string
+  lastName?: string
+}
 
 interface AuthContextType {
   user: User | null
-  login: (email: string, password: string) => Promise<void>
-  signup: (email: string, password: string, firstName?: string, lastName?: string) => Promise<void>
-  logout: () => void
+  getToken: () => Promise<string | null>
+  logout: () => Promise<void>
   isLoading: boolean
+  isSignedIn: boolean
 }
 
 // Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Auth provider component
+// Auth provider component - wraps Clerk hooks for app-wide use
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const { user: clerkUser, isLoaded, isSignedIn } = useUser()
+  const { getToken } = useClerkAuth()
+  const { signOut } = useClerk()
   const router = useRouter()
+  const [user, setUser] = useState<User | null>(null)
 
-  // Check for existing auth state on mount (only in browser)
+  // Sync Clerk user to local state
   useEffect(() => {
-    // Phase II Bypass: Always use a demo user
-    const demoUser: User = {
-      id: 'demo-user-phase-ii',
-      email: 'demo@example.com',
-      name: 'Demo User',
-      emailVerified: true,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    setUser(demoUser);
-    setIsLoading(false);
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    const result = await betterAuth.signIn(email, password);
-    if (result) {
-      setUser(result.user);
-      router.push('/dashboard');
-    } else {
-      throw new Error('Login failed');
+    if (isLoaded && isSignedIn && clerkUser) {
+      setUser({
+        id: clerkUser.id,
+        email: clerkUser.primaryEmailAddress?.emailAddress || '',
+        firstName: clerkUser.firstName || undefined,
+        lastName: clerkUser.lastName || undefined,
+      })
+    } else if (isLoaded && !isSignedIn) {
+      setUser(null)
     }
-  };
+  }, [isLoaded, isSignedIn, clerkUser])
 
-  const signup = async (email: string, password: string, firstName?: string, lastName?: string) => {
-    const result = await betterAuth.signUp(email, password, firstName, lastName);
-    if (result) {
-      setUser(result.user);
-      router.push('/dashboard');
-    } else {
-      throw new Error('Signup failed');
+  // Get JWT token for API calls
+  const getAuthToken = async (): Promise<string | null> => {
+    try {
+      const token = await getToken()
+      return token
+    } catch (error) {
+      console.error('Failed to get auth token:', error)
+      return null
     }
-  };
+  }
 
+  // Logout function
   const logout = async () => {
-    await betterAuth.signOut();
-    setUser(null);
-    router.push('/login');
-  };
+    await signOut()
+    setUser(null)
+    router.push('/')
+  }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        getToken: getAuthToken,
+        logout,
+        isLoading: !isLoaded,
+        isSignedIn: isSignedIn ?? false
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )

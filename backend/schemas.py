@@ -250,5 +250,6 @@ class ChatMessageResponse(BaseModel):
     created_at: datetime
 
 class ChatResponse(BaseModel):
+    """Schema for chat response."""
     response: str
     history: List[ChatMessageResponse]

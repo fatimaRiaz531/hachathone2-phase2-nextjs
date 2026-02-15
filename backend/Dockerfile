@@ -1,20 +1,35 @@
-# Use Python 3.9 slim image as base
-FROM python:3.9-slim
+
+# Use Python 3.12 slim image
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of the application code
+# Copy pyproject.toml
+COPY pyproject.toml .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    fastapi uvicorn[standard] sqlalchemy asyncpg psycopg2-binary python-dotenv sqlmodel \
+    python-jose[cryptography] passlib[bcrypt] httpx \
+    openai mcp
+
+# Copy application code
 COPY . .
 
-# Expose port 8000
+# Expose port
 EXPOSE 8000
 
-# Run the application
-CMD ["python", "run.py"]
+# Command to run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

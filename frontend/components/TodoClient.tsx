@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { apiClient } from '../lib/api';
 import { TaskCard } from './TaskCard';
+import { useAuth } from '@clerk/nextjs';
 
 interface Task {
   id: string;
@@ -16,7 +17,9 @@ interface Task {
 }
 
 export function TodoClient() {
+  const { isLoaded, userId, getToken } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
+  // ... (rest of state stays same)
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -27,12 +30,17 @@ export function TodoClient() {
   const [processingTasks, setProcessingTasks] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    if (isLoaded) {
+      fetchTasks();
+    }
+  }, [isLoaded, userId]);
 
   const fetchTasks = async () => {
     try {
       setLoading(true);
+      const token = await getToken();
+      apiClient.setToken(token);
+
       const data = await apiClient.get('/tasks');
       setTasks(data.data || []);
     } catch (err: any) {
@@ -48,6 +56,9 @@ export function TodoClient() {
 
     try {
       setLoading(true);
+      const token = await getToken();
+      apiClient.setToken(token);
+
       const newTask = await apiClient.post('/tasks', {
         title,
         description: description || '',
@@ -68,6 +79,9 @@ export function TodoClient() {
     if (processingTasks.has(id)) return;
     try {
       setProcessingTasks(prev => new Set(prev).add(id));
+      const token = await getToken();
+      apiClient.setToken(token);
+
       await apiClient.delete(`/tasks/${id}`);
       setTasks(prev => prev.filter(t => t.id !== id));
     } catch (err: any) {
@@ -90,6 +104,9 @@ export function TodoClient() {
     const newStatus = task.status === 'completed' ? 'pending' : 'completed';
     try {
       setProcessingTasks(prev => new Set(prev).add(task.id));
+      const token = await getToken();
+      apiClient.setToken(token);
+
       const updatedTask = await apiClient.patch(`/tasks/${task.id}`, {
         status: newStatus
       });
@@ -115,6 +132,9 @@ export function TodoClient() {
     if (!editingId || !editTitle.trim()) return;
     try {
       setLoading(true);
+      const token = await getToken();
+      apiClient.setToken(token);
+
       const updatedTask = await apiClient.put(`/tasks/${editingId}`, {
         title: editTitle,
         description: editDescription,

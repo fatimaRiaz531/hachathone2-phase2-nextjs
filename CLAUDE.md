@@ -210,8 +210,14 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
 
 ## Active Technologies
-- Python 3.8+ + Python standard library only (no external packages) (001-console-todo-app)
-- In-memory list of dictionaries (001-console-todo-app)
+- **Frontend**: Next.js 16+ with TypeScript, Tailwind CSS
+- **Backend**: FastAPI with SQLModel, Pydantic v2
+- **Database**: PostgreSQL (Neon DB)
+- **Authentication**: Clerk (managed auth service)
+- **AI/Chat**: OpenAI API with MCP tools
+- **Deployment**: Vercel (frontend), Docker/K8s (backend)
 
 ## Recent Changes
-- 001-console-todo-app: Added Python 3.8+ + Python standard library only (no external packages)
+- Phase II: Full-stack web app with Clerk authentication
+- Phase III: AI Chatbot with natural language task management
+

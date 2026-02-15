@@ -47,7 +47,7 @@ const TaskSortControls = ({ sortBy, setSortBy, sortOrder, setSortOrder }: TaskSo
         <label htmlFor="sortOrder" className="block text-sm font-medium text-gray-700 mb-1">
           Order
         </label>
-        <Select value={sortOrder} onValueChange={(value: 'asc' | 'desc') => setSortOrder(value)}>
+        <Select value={sortOrder} onValueChange={(value: string) => setSortOrder(value as 'asc' | 'desc')}>
           <SelectTrigger>
             <SelectValue placeholder="Order..." />
           </SelectTrigger>

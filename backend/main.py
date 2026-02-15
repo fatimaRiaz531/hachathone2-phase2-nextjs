@@ -5,14 +5,23 @@ This module sets up the FastAPI application with CORS middleware,
 exception handlers, and registers all route modules.
 """
 
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file immediately
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
-from routes import auth, tasks, users, chat
+from routes import tasks, users, chat
+from middleware.auth import jwt_auth_middleware, debug_log
 from database import async_engine as engine
 from sqlmodel import SQLModel
+
+debug_log("DEBUG AUTH: main.py loaded")
 
 
 # Create FastAPI app instance
@@ -25,15 +34,50 @@ app = FastAPI(
     redoc_url="/api/v1/redoc",
 )
 
+@app.get("/api/v1/debug/auth")
+async def debug_auth():
+    debug_log("DEBUG AUTH: Diagnostic route hit")
+    return {"status": "ok", "message": "Auth system is reachable"}
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    import traceback
+    error_trace = traceback.format_exc()
+    debug_log(f"GLOBAL ERROR: {request.method} {request.url.path}\n{str(exc)}\n{error_trace}")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error", "error": str(exc)}
+    )
+
 
 # Add CORS middleware
+print(f"DEBUG: Initializing CORS with origins for localhost and 127.0.0.1")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "https://localhost:3000",
+        "https://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    origin = request.headers.get("origin")
+    print(f"DEBUG: Incoming {request.method} request to {request.url.path} from {origin}")
+    response = await call_next(request)
+    return response
+
+
+# Register JWT auth middleware (optional global hook; routes use Depends(get_current_user))
+# This middleware provides a global place to add auth-related request processing/logging.
+app.middleware("http")(jwt_auth_middleware)
 
 
 # Exception handlers
@@ -79,7 +123,6 @@ async def generic_exception_handler(request, exc):
 
 
 # Include API routes
-app.include_router(auth.router, prefix="/api/v1", tags=["authentication"])
 app.include_router(tasks.router, prefix="/api/v1", tags=["tasks"])
 app.include_router(users.router, prefix="/api/v1", tags=["users"])
 app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
@@ -112,4 +155,5 @@ async def on_startup():
 if __name__ == "__main__":
     import uvicorn
     # Use string import format for reload support
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    print("BACKEND: Starting server on http://0.0.0.0:8000")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

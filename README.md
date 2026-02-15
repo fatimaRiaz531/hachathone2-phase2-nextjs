@@ -1,244 +1,138 @@
-# Todo Web App - Complete Full-Stack Application
+# TODO PRO - Professional Task Management System 🚀
 
-A comprehensive todo web application with authentication, built using a modern tech stack featuring Next.js 16+, FastAPI, and PostgreSQL.
+A high-performance command center for developers managing complex task ecosystems. Built with Next.js, FastAPI, and Neon DB.
 
-## 🚀 Features
+## 🌟 Features
 
-- **User Authentication**: Complete JWT-based authentication system
-- **Task Management**: Full CRUD operations for todos with filtering and sorting
-- **Responsive UI**: Mobile-first design with Tailwind CSS
-- **Modern Tech Stack**: Next.js 16+ with App Router, FastAPI, PostgreSQL
-- **Real-time Updates**: Live task management experience
-- **Secure**: Industry-standard security practices
+- **Intelligent Dashboard**: Fully interactive UI with real-time sync.
+- **AI Task Assistant**: natural language task management via OpenRouter (Gemini 2.0 Flash).
+- **User Isolation**: Strict data segregation using Better Auth (JWT).
+- **Professional Aesthetics**: Sleek Dark/Light mode support with Teal & Cyan accents.
+- **Cloud Scale**: Serverless PostgreSQL (Neon) for persistent storage.
 
-## 🛠️ Tech Stack
+## 🛠️ Setup Instructions
 
-### Frontend
-- **Framework**: Next.js 16+ (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS with responsive design
-- **State Management**: React hooks and SWR/react-query
+### 1. Prerequisites
 
-### Backend
-- **Framework**: FastAPI 0.104+
-- **Database**: PostgreSQL (compatible with Neon DB)
-- **ORM**: SQLModel (Pydantic + SQLAlchemy hybrid)
-- **Authentication**: JWT with python-jose
-- **Validation**: Pydantic v2
+- Node.js (v18+)
+- Python (3.9+)
+- Neon Database Account (PostgreSQL)
 
-### Infrastructure
-- **Frontend Hosting**: Vercel
-- **Backend Hosting**: Render
-- **Database**: Neon DB (serverless PostgreSQL)
-- **Containerization**: Docker
+### 2. Environment Configuration
 
-## 📋 Prerequisites
+Create a `.env` file in the **root** and **backend** directories:
 
-- Node.js 18+ for frontend
-- Python 3.8+ for backend
-- PostgreSQL (or Neon DB account)
-- Git
+**Backend (.env):**
 
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd todo-web-app
+```env
+DATABASE_URL=postgresql://[user]:[password]@[host]/neondb?sslmode=require
+OPENAI_API_KEY=sk-or-v1-... (OpenRouter Key)
+BETTER_AUTH_JWT_SECRET=your-secure-secret
 ```
 
-### 2. Backend Setup
+**Frontend (.env.local):**
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+BETTER_AUTH_JWT_SECRET=your-secure-secret
+```
+
+### 3. Backend Setup
 
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your database URL and secret keys
-
-# Run the backend
-python run.py
+python main.py
 ```
 
-The backend will start on `http://localhost:8000`
+_Running on http://localhost:8000_
 
-### 3. Frontend Setup
+### 4. Frontend Setup
 
 ```bash
-# In a new terminal, navigate to frontend directory
 cd frontend
-
-# Install dependencies
 npm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your backend API URL
-
-# Run the frontend
 npm run dev
 ```
 
-The frontend will start on `http://localhost:3000`
+_Running on http://localhost:3000_
 
-## 🔐 Environment Variables
+## 🚀 Vercel Deployment
 
-### Backend (.env)
-```env
-DATABASE_URL=postgresql+asyncpg://username:password@localhost:5432/todo_app
-SECRET_KEY=your-super-secret-key-change-this-in-production
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-REFRESH_TOKEN_EXPIRE_DAYS=7
-```
+1. **GitHub**: Push your repository to GitHub.
+2. **Vercel**: Create a new project and connect your repository.
+3. **Env Vars**: Add all environment variables (Backend API URL, Database URL, etc.) in Vercel Dashboard.
+4. **Build Settings**:
+   - Framework: Next.js
 
-### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
+   # TODO PRO - Phase II — Submission Ready
 
-## 🏗️ Project Structure
+   This repository contains Phase II of the Todo Web App: a Next.js frontend and FastAPI backend with JWT-based authentication and Neon (Postgres) persistence.
 
-```
-todo-web-app/
-├── backend/
-│   ├── main.py              # FastAPI application entry point
-│   ├── models.py            # SQLModel database models
-│   ├── schemas.py           # Pydantic request/response schemas
-│   ├── database.py          # DB connection/session management
-│   ├── middleware/
-│   │   └── auth.py          # JWT authentication middleware
-│   └── routes/
-│       ├── auth.py          # Authentication endpoints
-│       ├── tasks.py         # Task management endpoints
-│       └── users.py         # User management endpoints
-├── frontend/
-│   ├── app/                 # Next.js App Router pages
-│   │   ├── login/page.tsx   # Login page
-│   │   ├── register/page.tsx # Registration page
-│   │   ├── dashboard/page.tsx # Dashboard page
-│   │   └── layout.tsx       # Root layout
-│   ├── components/          # Reusable React components
-│   ├── lib/                 # Utility functions
-│   └── next.config.js       # Next.js configuration
-├── docker-compose.yml       # Container orchestration
-├── requirements.txt         # Python dependencies
-├── package.json             # Node.js dependencies
-└── README.md
-```
+   ## Quick Setup (Local)
 
-## 🐳 Docker Setup
+   Prerequisites:
+   - Node.js v18+
+   - Python 3.11+
+   - Neon or Postgres database
+   1. Backend - Environment
 
-Build and run with Docker Compose:
+   Create `backend/.env` with these values (example):
 
-```bash
-# Build and start both services
-docker-compose up --build
-
-# Backend will be available at http://localhost:8000
-# Frontend will be available at http://localhost:3000
-```
-
-## 🚢 Deployment
-
-### Backend to Render
-1. Create a new Web Service on Render
-2. Connect to your GitHub repository
-3. Set the root directory to `/backend`
-4. Add environment variables from `.env`
-5. Set build command: `pip install -r requirements.txt`
-6. Set start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-
-### Frontend to Vercel
-1. Create a new project on Vercel
-2. Connect to your GitHub repository
-3. Set the root directory to `/frontend`
-4. Add environment variables from `.env.local`
-5. Vercel will automatically detect and configure Next.js
-
-## 🧪 Running Tests
-
-### Backend Tests
-```bash
-cd backend
-python -m pytest
-```
-
-### Frontend Tests
-```bash
-cd frontend
-npm run test
-```
-
-## 🔧 API Documentation
-
-Once the backend is running, API documentation is available at:
-- Swagger UI: `http://localhost:8000/api/v1/docs`
-- ReDoc: `http://localhost:8000/api/v1/redoc`
-
-## 🤖 Phase III (AI-Powered Todo Chatbot)
-
-Phase III introduces a conversational AI assistant that allows you to manage tasks using natural language.
-
-### How to run Phase III Chatbot
-
-1. **Environment Setup**:
-   Ensure you have the following environment variables set:
-   - **Backend (.env)**:
-     ```env
-     OPENAI_API_KEY=your-openai-api-key
-     ```
-   - **Frontend (.env.local)**:
-     ```env
-     NEXT_PUBLIC_OPENAI_DOMAIN_KEY=your-openai-domain-key
-     ```
-
-2. **Start the MCP Server**:
-   The chatbot uses an MCP server for task management tools.
-   ```bash
-   cd backend
-   python mcp_server.py
+   ```env
+   DATABASE_URL=postgresql+asyncpg://<user>:<pass>@<host>:5432/<db>
+   BETTER_AUTH_JWT_SECRET=replace-with-a-secure-random-string
+   ALGORITHM=HS256
+   ACCESS_TOKEN_EXPIRE_MINUTES=1440
+   REFRESH_TOKEN_EXPIRE_DAYS=7
+   FRONTEND_URL=http://localhost:3000
    ```
 
-3. **Start the Backend**:
-   In a separate terminal:
+   2. Backend - Install & Run
+
    ```bash
    cd backend
-   python main.py
+   python -m venv .venv
+   .\.venv\Scripts\activate   # Windows
+   pip install -r requirements.txt
+   uvicorn main:app --reload --port 8000
    ```
 
-4. **Start the Frontend**:
-   In another terminal:
+   API: `http://localhost:8000/api/v1` (docs available at `/api/v1/docs`).
+   3. Frontend - Install & Run
+
    ```bash
    cd frontend
+   npm install
    npm run dev
    ```
 
-5. **Interact with the Chatbot**:
-   - Open `http://localhost:3000/dashboard` in your browser.
-   - Click the floating chat icon in the bottom-right corner.
-   - Try commands like:
-     - "Add a task to buy groceries tonight"
-     - "Show me my pending tasks"
-     - "Mark task [id] as complete"
-     - "Delete task [id]"
+   Open `http://localhost:3000`.
 
-### Tech Stack (Phase III)
-- **OpenAI ChatKit**: Modern UI for conversational AI.
-- **OpenAI Agents SDK**: Intelligent tool orchestration.
-- **Official MCP SDK**: Stateless protocol for exposing Python tools to AI agents.
-- **Conversation State**: History persisted in PostgreSQL via `Conversation` and `Message` models.
+   ## Vercel Deployment (Frontend)
+   1. Push repo to GitHub.
+   2. In Vercel, create a new project and connect the GitHub repo.
+   3. Set environment variables on Vercel (Production):
+      - `NEXT_PUBLIC_API_URL` → e.g. `https://your-backend.example.com`
+   4. Build settings:
+      - Framework: Next.js
+      - Root Directory: `frontend`
+   5. Vercel will auto-deploy on every push to `main`.
 
----
+   ## Auth & Security
+   - The backend issues JWT access tokens at `/api/v1/auth/login` and `/api/v1/auth/register` using `BETTER_AUTH_JWT_SECRET`.
+   - Frontend stores the token in `localStorage.token` and user info in `localStorage.user` via `/auth-callback`.
+   - All API requests include `Authorization: Bearer <token>` and the backend validates tokens and enforces user isolation.
 
-Built with ❤️ using Next.js, FastAPI, and PostgreSQL
+   ## UI Polishing
+   - Dashboard includes initial loading spinner and refresh-sync spinner.
+   - Refresh button is disabled while sync runs.
+   - Toggle and Delete buttons include `aria-label` attributes.
 
+   ## 60-Second Demo Script
+
+   See `DEMO_60_SECONDS.md` for a concise step-by-step demo script you can run during the presentation.
+
+   ***
+
+   Prepared for submission — Phase II is demo-ready.
