@@ -9,9 +9,11 @@ import { Modal } from '@/components/ui/Modal';
 import { TaskForm } from '@/components/tasks/TaskForm';
 import { Task } from '@/lib/types';
 import { tasksApi } from '@/lib/api/tasks';
+import { useClerkApi } from '@/lib/api/clerk-client';
 
 
 const DashboardPage = () => {
+  useClerkApi(); // This hook sets the token provider for the singleton client
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTaskForm, setShowTaskForm] = useState(false);

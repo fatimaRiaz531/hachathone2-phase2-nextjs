@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
 import { useAuth } from '@clerk/nextjs';
+import { useClerkApi } from '@/lib/api/clerk-client';
 
 // Define message type
 interface Message {
@@ -22,8 +23,7 @@ export function ChatBot() {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const { getToken } = useAuth(); // Assuming useAuth exposes getToken using useAuth() from Clerk wrapper/context
-
+    const apiClient = useClerkApi();
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -47,22 +47,7 @@ export function ChatBot() {
         setIsLoading(true);
 
         try {
-            const token = await getToken();
-
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/chat`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ message: userMessage.content }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to send message');
-            }
-
-            const data = await response.json();
+            const data = await apiClient.post<any>('/chat', { message: userMessage.content });
 
             const assistantMessage: Message = {
                 id: (Date.now() + 1).toString(),

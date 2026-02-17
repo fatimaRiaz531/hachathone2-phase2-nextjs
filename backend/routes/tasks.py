@@ -181,7 +181,14 @@ async def delete_task(
     task = result.scalar_one_or_none()
 
     if not task:
-        debug_log(f"DEBUG TASK: DELETE 404 for {task_id}")
+        # Check if task exists for ANY user to debug ownership
+        all_query = select(Task).where(Task.id == task_id)
+        all_result = await db.execute(all_query)
+        any_task = all_result.scalar_one_or_none()
+        if any_task:
+            debug_log(f"DEBUG TASK: DELETE 404: Task {task_id} exists but belongs to user {any_task.user_id}")
+        else:
+            debug_log(f"DEBUG TASK: DELETE 404: Task {task_id} NOT FOUND in database")
         raise HTTPException(status_code=404, detail="Task not found")
 
     await db.delete(task)

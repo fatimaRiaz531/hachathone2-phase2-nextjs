@@ -854,3 +854,342 @@ sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class
 [2026-02-15 11:36:52] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
 [2026-02-15 11:36:52] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
 [2026-02-15 11:36:53] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 15:43:18] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 15:43:25] DEBUG AUTH: main.py loaded
+[2026-02-17 15:46:06] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 15:46:06] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 15:46:06] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 15:46:06] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 15:46:06] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 15:46:14] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-17 15:46:14] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 15:46:14] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 15:46:14] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 15:46:14] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 15:46:21] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 15:46:21] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 15:46:21] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-17 15:46:21] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 15:46:21] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 15:46:21] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 15:46:21] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 15:46:23] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 15:46:53] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/chat
+[2026-02-17 15:46:53] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 15:46:53] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 15:46:53] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 15:46:53] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 15:46:53] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 15:46:53] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 15:46:58] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 15:47:16] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 15:47:16] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 15:47:16] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 15:47:16] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 15:47:16] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 15:47:21] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 15:47:48] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/3b4a28ea-1534-45c7-ae33-727889f93dfe
+[2026-02-17 15:47:48] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/3b4a28ea-1534-45c7-ae33-727889f93dfe
+[2026-02-17 15:47:48] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/3b4a28ea-1534-45c7-ae33-727889f93dfe
+[2026-02-17 15:47:48] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/3b4a28ea-1534-45c7-ae33-727889f93dfe
+[2026-02-17 15:47:48] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 15:47:48] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 15:47:48] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 19:40:24] DEBUG AUTH: UNEXPECTED ERROR: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.ConnectionDoesNotExistError'>: connection was closed in the middle of operation
+[SQL: SELECT users.email, users.first_name, users.last_name, users.is_active, users.id, users.password_hash, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::VARCHAR]
+[parameters: ('user_39NyvTMSW5d1Yeo98ks5shJbNvH',)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\selector_events.py", line 984, in _read_ready__get_buffer
+    nbytes = self._sock.recv_into(buf)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 550, in _prepare_and_execute
+    self._rows = deque(await prepared_stmt.fetch(*parameters))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 177, in fetch
+    data = await self.__bind_execute(args, 0, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 268, in __bind_execute
+    data, status, _ = await self.__do_execute(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda protocol: protocol.bind_execute(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            self._state, args, '', limit, True, timeout))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\asyncpg\prepared_stmt.py", line 257, in __do_execute
+    return await executor(protocol)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "asyncpg/protocol/protocol.pyx", line 205, in bind_execute
+asyncpg.exceptions.ConnectionDoesNotExistError: connection was closed in the middle of operation
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.Error: <class 'asyncpg.exceptions.ConnectionDoesNotExistError'>: connection was closed in the middle of operation
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 145, in get_current_user
+    result = await db.execute(select(User).where(User.id == user_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 449, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 563, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 513, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.ConnectionDoesNotExistError'>: connection was closed in the middle of operation
+[SQL: SELECT users.email, users.first_name, users.last_name, users.is_active, users.id, users.password_hash, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = $1::VARCHAR]
+[parameters: ('user_39NyvTMSW5d1Yeo98ks5shJbNvH',)]
+(Background on this error at: https://sqlalche.me/e/20/dbapi)
+
+[2026-02-17 19:51:22] DEBUG MIDDLEWARE: Request GET /api/v1/debug/auth
+[2026-02-17 19:51:22] DEBUG MIDDLEWARE: Skipping auth for /api/v1/debug/auth
+[2026-02-17 19:51:22] DEBUG AUTH: Diagnostic route hit
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:13] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:27] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:27] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:27] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 20:07:39] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:07:39] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:39] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-17 20:07:39] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:07:39] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:07:39] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:07:39] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:07:41] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:41] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:07:41] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 20:07:41] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:07:48] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:48] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:48] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:48] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:48] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:07:48] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:07:48] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:07:51] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Request PATCH /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:55] DEBUG AUTH: No token provided, falling back to demo mode
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Request PUT /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:55] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:07:56] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:07:56] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:07:56] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:08:00] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:08:00] DEBUG TASK: PUT /tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:08:23] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/chat
+[2026-02-17 20:08:23] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:08:23] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:08:23] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:08:23] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:08:23] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:08:23] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:08:25] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:11:27] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:11:27] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:11:27] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:11:27] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:11:27] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:11:27] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:11:27] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:11:30] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:11:33] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-17 20:11:33] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:11:33] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:11:33] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:11:33] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:11:33] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:11:33] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:11:35] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:11:59] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:11:59] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:11:59] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:11:59] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:11:59] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:12:12] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:12:16] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:12:16] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:12:16] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:12:16] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:12:16] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:12:23] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:13:51] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:13:51] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:13:51] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:13:51] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:13:51] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:13:53] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:13:53] DEBUG TASK: DELETE /tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:13:59] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:13:59] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b
+[2026-02-17 20:13:59] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:13:59] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:13:59] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:14:01] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:14:01] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:14:01] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:14:01] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:14:01] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:14:02] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:14:02] DEBUG TASK: DELETE /tasks/b838bd7a-bd2c-44ac-bece-ceda63d9bf2b for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:14:03] DEBUG TASK: DELETE 404: Task b838bd7a-bd2c-44ac-bece-ceda63d9bf2b NOT FOUND in database
+[2026-02-17 20:14:04] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:14:05] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:14:05] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:14:05] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:14:05] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:14:05] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:14:07] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:14:13] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:14:13] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:14:13] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:14:13] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:14:13] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:14:15] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
