@@ -4,6 +4,7 @@ from typing import List, Dict, Any, Optional
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletionToolParam
 from app.mcp_server import add_task, list_tasks, complete_task, delete_task, update_task, AddTaskArgs, ListTasksArgs, CompleteTaskArgs, DeleteTaskArgs, UpdateTaskArgs
+from middleware.auth import debug_log
 
 # Initialize OpenAI Client
 # Initialize OpenAI Client
@@ -86,13 +87,15 @@ async def run_agent(user_id: str, history: List[ChatCompletionMessageParam]) -> 
     MAX_TURNS = 5
     
     for _ in range(MAX_TURNS):
+        debug_log(f"DEBUG AGENT: Sending request to OpenAI (Turn {_+1})")
         response = await client.chat.completions.create(
-            model="gpt-4o", # Or gpt-4-turbo
+            model="gpt-4o", # Change to "gpt-3.5-turbo" if needed for reliability
             messages=current_messages,
             tools=TOOLS,
             tool_choice="auto",
             max_tokens=1000
         )
+        debug_log(f"DEBUG AGENT: Received response from OpenAI")
         
         message = response.choices[0].message
         current_messages.append(message)

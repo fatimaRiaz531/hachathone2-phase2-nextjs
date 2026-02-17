@@ -137,8 +137,14 @@ async def chat_endpoint(
     history.append({"role": "user", "content": request.message})
     
     # 4. Run Agent
-    # run_agent executes the loop and returns final response + ALL messages (including tool calls)
-    agent_result = await run_agent(current_user.id, history)
+    debug_log(f"DEBUG CHAT: Running agent for user {current_user.id} with history len {len(history)}")
+    try:
+        agent_result = await run_agent(current_user.id, history)
+        debug_log(f"DEBUG CHAT: Agent finished successfully")
+    except Exception as e:
+        import traceback
+        debug_log(f"DEBUG CHAT: Agent failed: {str(e)}\n{traceback.format_exc()}")
+        raise
     
     # 5. Persist Assistant Response and Tool Calls (if any)
     # agent_result["messages"] contains the full chain including the new tools interactions.

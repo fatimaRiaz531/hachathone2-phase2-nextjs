@@ -1193,3 +1193,7 @@ WHERE users.id = $1::VARCHAR]
 [2026-02-17 20:14:13] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
 [2026-02-17 20:14:13] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
 [2026-02-17 20:14:15] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:16:13] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:16:18] DEBUG AUTH: main.py loaded
+[2026-02-17 20:16:29] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:16:34] DEBUG AUTH: main.py loaded

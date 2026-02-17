@@ -43,7 +43,9 @@ async def debug_auth():
 async def global_exception_handler(request, exc):
     import traceback
     error_trace = traceback.format_exc()
-    debug_log(f"GLOBAL ERROR: {request.method} {request.url.path}\n{str(exc)}\n{error_trace}")
+    log_msg = f"GLOBAL ERROR: {request.method} {request.url.path}\n{str(exc)}\n{error_trace}"
+    print(log_msg)
+    debug_log(log_msg)
     return JSONResponse(
         status_code=500,
         content={"detail": "Internal server error", "error": str(exc)}
@@ -109,17 +111,7 @@ async def http_exception_handler(request, exc):
     )
 
 
-@app.exception_handler(Exception)
-async def generic_exception_handler(request, exc):
-    """Handle unexpected exceptions."""
-    # Log the full exception for debugging
-    import traceback
-    print("Generic Exception Handler triggered:")
-    traceback.print_exc()
-    return JSONResponse(
-        status_code=500,
-        content={"detail": "An unexpected error occurred"}
-    )
+# Generic handler removed, consolidated at top
 
 
 # Include API routes

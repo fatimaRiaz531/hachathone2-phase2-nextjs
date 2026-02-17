@@ -46,6 +46,7 @@ class ClerkApiClient {
             },
         };
 
+        console.log(`DEBUG API: Fetching ${url}`, { method: config.method });
         const response = await fetch(url, config);
 
         if (!response.ok) {
