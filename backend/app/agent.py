@@ -11,10 +11,19 @@ from middleware.auth import debug_log
 api_key = os.getenv("OPENAI_API_KEY")
 base_url = os.getenv("OPENAI_BASE_URL")
 
-if not base_url and api_key and api_key.startswith("sk-or-"):
-    base_url = "https://openrouter.ai/api/v1"
+base_url = "https://openrouter.ai/api/v1"
 
-client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+debug_log(f"DEBUG AGENT: Loaded API Key prefix: {str(api_key)[:7]}...")
+debug_log(f"DEBUG AGENT: Using Base URL: {base_url}")
+
+client = AsyncOpenAI(
+    api_key=api_key, 
+    base_url=base_url,
+    default_headers={
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "Todo App AI",
+    }
+)
 
 # Define Tool Schemas manually or via Pydantic
 # Since we have Pydantic models in mcp_server.py, we can use them to generate schemas.
@@ -89,7 +98,7 @@ async def run_agent(user_id: str, history: List[ChatCompletionMessageParam]) -> 
     for _ in range(MAX_TURNS):
         debug_log(f"DEBUG AGENT: Sending request to OpenAI (Turn {_+1})")
         response = await client.chat.completions.create(
-            model="gpt-4o", # Change to "gpt-3.5-turbo" if needed for reliability
+            model="google/gemma-3-27b-it:free", # Stable and verified available
             messages=current_messages,
             tools=TOOLS,
             tool_choice="auto",

@@ -33,11 +33,14 @@ _jwks_cache = None
 _jwks_cache_time = None
 
 def debug_log(message: str):
-    """Write debug logs to a file."""
-    log_path = os.path.join(os.path.dirname(__file__), "auth_debug.txt")
-    with open(log_path, "a") as f:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        f.write(f"[{timestamp}] {message}\n")
+    """Write debug logs to a file safely."""
+    try:
+        log_path = os.path.join(os.path.dirname(__file__), "auth_debug.txt")
+        with open(log_path, "a") as f:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            f.write(f"[{timestamp}] {message}\n")
+    except Exception as e:
+        print(f"FAILED TO LOG: {message} (Error: {e})")
 
 # Log initialization
 debug_log("DEBUG AUTH: Middleware initialized/reloaded")

@@ -1197,3 +1197,1355 @@ WHERE users.id = $1::VARCHAR]
 [2026-02-17 20:16:18] DEBUG AUTH: main.py loaded
 [2026-02-17 20:16:29] DEBUG AUTH: Middleware initialized/reloaded
 [2026-02-17 20:16:34] DEBUG AUTH: main.py loaded
+[2026-02-17 20:18:28] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:18:28] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:18:28] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:18:28] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:18:28] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:18:33] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:18:35] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:18:35] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:18:35] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:18:35] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:18:35] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:18:40] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:18:54] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:18:54] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:18:54] DEBUG MIDDLEWARE: Request POST /api/v1/tasks
+[2026-02-17 20:18:54] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:18:54] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:18:54] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:18:54] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:18:56] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:19:20] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/chat
+[2026-02-17 20:19:20] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:19:20] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:19:20] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:19:20] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:19:20] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:19:20] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:19:21] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:19:23] GLOBAL ERROR: POST /api/v1/chat
+name 'debug_log' is not defined
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 81, in collapse_excgroups
+  |     yield
+  |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 192, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\anyio\_backends\_asyncio.py", line 783, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |                                    ~~~~~~~~~~~~~~~~~~^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    |     raise exc
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 211, in jwt_auth_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |                                    ~~~~~~~~~~~~~~~~~~^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    |     self.gen.throw(value)
+    |     ~~~~~~~~~~~~~~^^^^^^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    |     raise exc
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 76, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 140, in chat_endpoint
+    |     debug_log(f"DEBUG CHAT: Running agent for user {current_user.id} with history len {len(history)}")
+    |     ^^^^^^^^^
+    | NameError: name 'debug_log' is not defined
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 211, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 76, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 140, in chat_endpoint
+    debug_log(f"DEBUG CHAT: Running agent for user {current_user.id} with history len {len(history)}")
+    ^^^^^^^^^
+NameError: name 'debug_log' is not defined
+
+[2026-02-17 20:19:56] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:19:58] DEBUG AUTH: main.py loaded
+[2026-02-17 20:20:20] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:20:20] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:20:20] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:20:20] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:20:20] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:20:24] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:20:26] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:20:26] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:20:26] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:20:26] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:20:26] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:20:29] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:20:29] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:20:29] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:20:29] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:20:29] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:20:30] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:20:31] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:20:31] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:20:31] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:20:34] DEBUG CHAT: Agent failed: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 91, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:20:34] GLOBAL ERROR: POST /api/v1/chat
+Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1577, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://openrouter.ai/api/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 211, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 76, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 91, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:22:32] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:22:35] DEBUG AUTH: main.py loaded
+[2026-02-17 20:22:43] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:22:46] DEBUG AUTH: main.py loaded
+[2026-02-17 20:23:15] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:23:18] DEBUG AUTH: main.py loaded
+[2026-02-17 20:24:43] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/tasks
+[2026-02-17 20:24:43] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:24:43] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:24:43] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:24:43] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:24:43] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:24:43] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:24:47] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:24:49] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/users/me/tasks/stats
+[2026-02-17 20:24:49] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:24:49] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:24:49] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:24:49] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:24:49] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:24:49] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:24:53] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:24:58] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:24:58] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:24:58] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:24:58] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:24:58] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:24:59] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:25:01] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:25:01] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:25:03] DEBUG CHAT: Agent failed: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 98, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:25:03] GLOBAL ERROR: POST /api/v1/chat
+Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1577, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://openrouter.ai/api/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 211, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 76, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 98, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:29:19] DEBUG MIDDLEWARE: Request GET /health
+[2026-02-17 20:29:19] DEBUG MIDDLEWARE: Skipping auth for /health
+[2026-02-17 20:30:20] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:30:27] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:30:37] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:30:39] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:30:39] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:30:40] DEBUG AUTH: main.py loaded
+[2026-02-17 20:31:28] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:31:28] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:31:28] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:31:28] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:31:28] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:31:33] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:31:34] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:31:34] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:31:34] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:31:34] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:31:34] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:31:40] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:31:48] DEBUG MIDDLEWARE: Request OPTIONS /api/v1/chat
+[2026-02-17 20:31:48] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:31:49] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:31:49] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:31:49] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:31:49] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:31:49] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:31:50] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:31:51] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:31:51] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:31:53] DEBUG CHAT: Agent failed: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:31:54] GLOBAL ERROR: POST /api/v1/chat
+Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1577, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://openrouter.ai/api/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 214, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 76, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:34:07] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:34:11] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:34:11] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:34:13] DEBUG AUTH: main.py loaded
+[2026-02-17 20:34:25] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:34:28] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:34:28] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:34:29] DEBUG AUTH: main.py loaded
+[2026-02-17 20:35:57] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:35:59] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:35:59] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:36:00] DEBUG AUTH: main.py loaded
+[2026-02-17 20:36:37] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:36:39] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:36:39] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:36:39] DEBUG AUTH: main.py loaded
+[2026-02-17 20:36:48] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:36:50] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:36:50] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:36:52] DEBUG AUTH: main.py loaded
+[2026-02-17 20:37:20] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:37:23] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:37:23] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:37:24] DEBUG AUTH: main.py loaded
+[2026-02-17 20:37:39] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:37:39] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:37:39] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:37:39] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:37:39] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:37:43] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:37:45] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:37:45] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:37:48] DEBUG CHAT: Agent failed: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:37:48] GLOBAL ERROR: POST /api/v1/chat
+Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1577, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://openrouter.ai/api/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 214, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 60, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:38:04] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:38:04] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:38:04] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:38:04] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:38:04] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:38:06] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:38:06] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:38:06] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:38:08] DEBUG CHAT: Agent failed: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:38:08] GLOBAL ERROR: POST /api/v1/chat
+Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1577, in request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\httpx\_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://openrouter.ai/api/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\middleware\auth.py", line 214, in jwt_auth_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\main.py", line 60, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 107, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\fastapi\routing.py", line 314, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+
+[2026-02-17 20:38:26] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:38:28] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:38:28] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:38:29] DEBUG AUTH: main.py loaded
+[2026-02-17 20:40:46] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:40:48] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:40:48] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:40:49] DEBUG AUTH: main.py loaded
+[2026-02-17 20:41:52] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:41:52] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:41:52] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:41:52] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:41:52] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:41:56] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:41:58] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:41:58] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:41:58] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:41:58] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:41:58] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:41:58] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:41:58] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:41:58] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:41:58] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:41:58] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:42:03] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:42:03] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:42:07] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:42:07] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:42:07] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:42:07] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:42:07] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:42:07] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:42:07] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:42:07] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:42:07] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:42:07] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:42:09] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:42:09] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:42:11] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:42:11] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:42:13] DEBUG CHAT: Auth failure: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-02-17 20:42:41] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:42:42] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 20:42:42] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 20:42:43] DEBUG AUTH: main.py loaded
+[2026-02-17 20:48:18] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:48:20] DEBUG AGENT: Loaded API Key prefix: sk-4666...
+[2026-02-17 20:48:20] DEBUG AGENT: Using Base URL: https://api.ccapi.ai/v1
+[2026-02-17 20:48:21] DEBUG AUTH: main.py loaded
+[2026-02-17 20:48:30] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 20:48:32] DEBUG AGENT: Loaded API Key prefix: sk-4666...
+[2026-02-17 20:48:32] DEBUG AGENT: Using Base URL: https://api.ccapi.ai/v1
+[2026-02-17 20:48:33] DEBUG AUTH: main.py loaded
+[2026-02-17 20:49:04] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 20:49:04] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 20:49:04] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:49:04] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:49:04] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:49:08] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:49:10] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 20:49:10] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 20:49:10] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:49:10] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:49:10] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:49:14] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 20:49:14] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 20:49:14] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 20:49:14] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 20:49:14] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 20:49:14] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:49:15] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 20:49:16] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 20:49:16] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 20:49:18] DEBUG CHAT: Agent failed: Error code: 405
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 96, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 405
+
+[2026-02-17 21:00:55] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:00:56] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:00:56] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:00:57] DEBUG AUTH: main.py loaded
+[2026-02-17 21:01:07] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:01:08] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:01:08] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:01:09] DEBUG AUTH: main.py loaded
+[2026-02-17 21:01:28] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 21:01:28] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 21:01:28] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:01:28] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:01:28] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:01:32] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:01:34] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 21:01:34] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 21:01:34] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:01:34] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:01:34] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:01:43] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:01:51] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 21:01:51] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 21:01:51] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:01:51] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:01:51] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:01:55] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:01:56] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 21:01:56] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 21:01:58] DEBUG CHAT: Agent failed: Error code: 404 - {'error': {'message': 'No endpoints found for google/gemini-2.0-flash-exp:free.', 'code': 404}, 'user_id': 'user_39KxYt2ElGjDolVIiMGMvOom4Oq'}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for google/gemini-2.0-flash-exp:free.', 'code': 404}, 'user_id': 'user_39KxYt2ElGjDolVIiMGMvOom4Oq'}
+
+[2026-02-17 21:02:28] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:02:30] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:02:30] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:02:30] DEBUG AUTH: main.py loaded
+[2026-02-17 21:03:07] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:03:09] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:03:09] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:03:09] DEBUG AUTH: main.py loaded
+[2026-02-17 21:03:35] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:03:37] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:03:37] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:03:38] DEBUG AUTH: main.py loaded
+[2026-02-17 21:03:53] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:03:56] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:03:56] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:03:57] DEBUG AUTH: main.py loaded
+[2026-02-17 21:04:07] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 21:04:07] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 21:04:07] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:04:07] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:04:07] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:04:08] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 21:04:08] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 21:04:08] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:04:08] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:04:08] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:04:17] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:04:17] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:04:19] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 21:04:19] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 21:04:20] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 21:04:20] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 21:04:20] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:04:20] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:04:20] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:04:25] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:04:25] DEBUG CHAT: Agent failed: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_39KxYt2ElGjDolVIiMGMvOom4Oq'}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'Provider returned error', 'code': 429, 'metadata': {'raw': 'meta-llama/llama-3.3-70b-instruct:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations', 'provider_name': 'Venice', 'is_byok': False}}, 'user_id': 'user_39KxYt2ElGjDolVIiMGMvOom4Oq'}
+
+[2026-02-17 21:08:26] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:08:28] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:08:28] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:08:29] DEBUG AUTH: main.py loaded
+[2026-02-17 21:08:41] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:08:43] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:08:43] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:08:44] DEBUG AUTH: main.py loaded
+[2026-02-17 21:11:03] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 21:11:03] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 21:11:03] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:11:03] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:11:03] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:11:13] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 21:11:13] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 21:11:13] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:11:13] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:11:13] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:11:27] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:11:39] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 21:11:39] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 21:11:39] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:11:39] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:11:39] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:11:43] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:11:55] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 21:11:55] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 21:11:58] DEBUG CHAT: Auth failure: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-02-17 21:12:00] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:12:55] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:12:57] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:12:57] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:12:57] DEBUG AUTH: main.py loaded
+[2026-02-17 21:13:43] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:13:45] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:13:45] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:13:46] DEBUG AUTH: main.py loaded
+[2026-02-17 21:14:18] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:14:19] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:14:19] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:14:20] DEBUG AUTH: main.py loaded
+[2026-02-17 21:14:55] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:14:57] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:14:57] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:14:58] DEBUG AUTH: main.py loaded
+[2026-02-17 21:15:04] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 21:15:04] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 21:15:04] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:15:04] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:15:04] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:15:08] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:15:10] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 21:15:10] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 21:15:10] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:15:10] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:15:10] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:15:14] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 21:15:14] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 21:15:14] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:15:14] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:15:14] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:15:15] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:15:16] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:15:17] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 21:15:17] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 21:15:19] DEBUG CHAT: Agent failed: Error code: 404 - {'error': {'message': 'No endpoints found matching your data policy (Free model publication). Configure: https://openrouter.ai/settings/privacy', 'code': 404}}
+Traceback (most recent call last):
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\routes\chat.py", line 142, in chat_endpoint
+    agent_result = await run_agent(current_user.id, history)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\itcourse\HACKATHON\Todo-App-main\Todo-App-main\backend\app\agent.py", line 100, in run_agent
+    response = await client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 2678, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1797, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\abs\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1597, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found matching your data policy (Free model publication). Configure: https://openrouter.ai/settings/privacy', 'code': 404}}
+
+[2026-02-17 21:19:14] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc
+[2026-02-17 21:19:14] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc
+[2026-02-17 21:19:14] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:19:14] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:19:14] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:19:20] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:19:20] DEBUG TASK: DELETE /tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:19:46] DEBUG MIDDLEWARE: Request DELETE /api/v1/tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc
+[2026-02-17 21:19:46] DEBUG MIDDLEWARE: Protected path /api/v1/tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc
+[2026-02-17 21:19:46] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:19:46] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:19:46] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:19:53] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:19:53] DEBUG TASK: DELETE /tasks/36a0ace8-b796-42e6-932e-a9cdb872f0cc for user user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:19:54] DEBUG TASK: DELETE 404: Task 36a0ace8-b796-42e6-932e-a9cdb872f0cc NOT FOUND in database
+[2026-02-17 21:20:03] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:20:06] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:20:06] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:20:07] DEBUG AUTH: main.py loaded
+[2026-02-17 21:20:38] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:20:40] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:20:40] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:20:40] DEBUG AUTH: main.py loaded
+[2026-02-17 21:25:52] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:25:55] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:25:55] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:25:55] DEBUG AUTH: main.py loaded
+[2026-02-17 21:26:21] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:26:23] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:26:23] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:26:23] DEBUG AUTH: main.py loaded
+[2026-02-17 21:26:50] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-17 21:26:51] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-17 21:26:51] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-17 21:26:52] DEBUG AUTH: main.py loaded
+[2026-02-17 21:28:15] DEBUG MIDDLEWARE: Request GET /api/v1/tasks
+[2026-02-17 21:28:15] DEBUG MIDDLEWARE: Protected path /api/v1/tasks
+[2026-02-17 21:28:15] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:28:15] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:28:15] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:28:20] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:28:22] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-17 21:28:22] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-17 21:28:22] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:28:22] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:28:22] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:28:22] DEBUG MIDDLEWARE: Request GET /api/v1/users/me/tasks/stats
+[2026-02-17 21:28:22] DEBUG MIDDLEWARE: Protected path /api/v1/users/me/tasks/stats
+[2026-02-17 21:28:22] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-17 21:28:22] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-17 21:28:22] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-17 21:28:27] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:28:27] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-17 21:28:28] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 9
+[2026-02-17 21:28:28] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-17 21:28:34] DEBUG AGENT: Received response from OpenAI
+[2026-02-17 21:28:34] DEBUG CHAT: Agent finished successfully

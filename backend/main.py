@@ -52,23 +52,7 @@ async def global_exception_handler(request, exc):
     )
 
 
-# Add CORS middleware
-print(f"DEBUG: Initializing CORS with origins for localhost and 127.0.0.1")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "https://localhost:3000",
-        "https://127.0.0.1:3000",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+# log_requests will be inner to jwt_auth_middleware
 @app.middleware("http")
 async def log_requests(request, call_next):
     origin = request.headers.get("origin")
@@ -114,10 +98,26 @@ async def http_exception_handler(request, exc):
 # Generic handler removed, consolidated at top
 
 
-# Include API routes
+# Register routes
 app.include_router(tasks.router, prefix="/api/v1", tags=["tasks"])
 app.include_router(users.router, prefix="/api/v1", tags=["users"])
 app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
+
+# Add CORS middleware LAST so it's the outermost layer
+# This ensures it adds CORS headers to ALL responses, including errors
+print(f"DEBUG: Initializing CORS as outermost layer")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Root endpoint

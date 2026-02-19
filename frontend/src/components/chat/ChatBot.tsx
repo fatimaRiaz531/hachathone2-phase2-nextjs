@@ -57,14 +57,15 @@ export function ChatBot() {
             };
 
             setMessages((prev) => [...prev, assistantMessage]);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Chat error:', error);
+            const errorMessage = error.message || 'Sorry, I encountered an error. Please try again.';
             setMessages((prev) => [
                 ...prev,
                 {
                     id: (Date.now() + 1).toString(),
                     role: 'assistant',
-                    content: 'Sorry, I encountered an error. Please try again.',
+                    content: errorMessage.includes('HTTP error') ? `Backend error: ${errorMessage}` : errorMessage,
                 },
             ]);
         } finally {

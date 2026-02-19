@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import desc
 from database import get_async_session
-from middleware.auth import get_current_user
+from middleware.auth import get_current_user, debug_log
 from models import User, Conversation, Message
 from app.agent import run_agent
 import uuid
@@ -142,9 +142,15 @@ async def chat_endpoint(
         agent_result = await run_agent(current_user.id, history)
         debug_log(f"DEBUG CHAT: Agent finished successfully")
     except Exception as e:
+        import openai
+        if isinstance(e, openai.AuthenticationError):
+            debug_log(f"DEBUG CHAT: Auth failure: {str(e)}")
+            raise HTTPException(status_code=502, detail=f"OpenRouter Authentication Error: {str(e)}")
+        
         import traceback
-        debug_log(f"DEBUG CHAT: Agent failed: {str(e)}\n{traceback.format_exc()}")
-        raise
+        error_trace = traceback.format_exc()
+        debug_log(f"DEBUG CHAT: Agent failed: {str(e)}\n{error_trace}")
+        raise HTTPException(status_code=500, detail=str(e))
     
     # 5. Persist Assistant Response and Tool Calls (if any)
     # agent_result["messages"] contains the full chain including the new tools interactions.
