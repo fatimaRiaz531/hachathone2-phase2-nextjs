@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { ChatBot } from "@/components/chat/ChatBot";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -15,18 +16,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="font-sans antialiased">
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="min-h-screen">
-              {children}
-            </div>
-            <ChatBot />
-          </ThemeProvider>
-        </AuthProvider>
-      </body>
-    </html>
+    <ClerkProvider dynamic>
+      <html lang="en" suppressHydrationWarning>
+        <body className="font-sans antialiased">
+          <AuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <div className="min-h-screen">
+                {children}
+              </div>
+              <ChatBot />
+            </ThemeProvider>
+          </AuthProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
 

@@ -6,6 +6,8 @@ import { User } from '@/lib/types';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isLoaded: boolean;
+  userId: string | null;
   getToken: () => Promise<string | null>;
   logout: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -122,6 +124,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       loading,
+      isLoaded: !loading,
+      userId: user?.id ?? null,
       getToken,
       logout,
       login,
