@@ -3,9 +3,9 @@ const nextConfig = {
   output: 'standalone',
   trailingSlash: false,
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_placeholder',
-    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || 'sk_test_placeholder',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_placeholder_for_build',
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || 'sk_test_placeholder_for_build',
   },
   images: {
     remotePatterns: [
@@ -13,11 +13,12 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8000',
+      },
     ],
-  },
-  // Skip static generation for pages that require Clerk
-  experimental: {
-    // Allow build to proceed without Clerk keys
   },
 }
 
