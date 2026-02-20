@@ -2549,3 +2549,36 @@ openai.NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints foun
 [2026-02-17 21:28:28] DEBUG AGENT: Sending request to OpenAI (Turn 1)
 [2026-02-17 21:28:34] DEBUG AGENT: Received response from OpenAI
 [2026-02-17 21:28:34] DEBUG CHAT: Agent finished successfully
+[2026-02-20 15:44:49] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-20 15:44:52] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-20 15:44:52] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-20 15:44:53] DEBUG AUTH: main.py loaded
+[2026-02-20 15:44:54] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-20 15:44:56] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-20 15:44:56] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-20 15:44:56] DEBUG AUTH: main.py loaded
+[2026-02-20 15:44:57] DEBUG AUTH: main.py loaded
+[2026-02-20 15:53:58] DEBUG AUTH: Middleware initialized/reloaded
+[2026-02-20 15:54:00] DEBUG AGENT: Loaded API Key prefix: sk-or-v...
+[2026-02-20 15:54:00] DEBUG AGENT: Using Base URL: https://openrouter.ai/api/v1
+[2026-02-20 15:54:00] DEBUG AUTH: main.py loaded
+[2026-02-20 15:54:10] DEBUG MIDDLEWARE: Request GET /
+[2026-02-20 15:54:10] DEBUG MIDDLEWARE: Protected path /
+[2026-02-20 15:54:10] DEBUG MIDDLEWARE: Request GET /favicon.ico
+[2026-02-20 15:54:10] DEBUG MIDDLEWARE: Protected path /favicon.ico
+[2026-02-20 15:54:16] DEBUG MIDDLEWARE: Request GET /docs
+[2026-02-20 15:54:16] DEBUG MIDDLEWARE: Skipping auth for /docs
+[2026-02-20 15:54:37] DEBUG MIDDLEWARE: Request GET /
+[2026-02-20 15:54:37] DEBUG MIDDLEWARE: Protected path /
+[2026-02-20 15:54:46] DEBUG MIDDLEWARE: Request GET /docs
+[2026-02-20 15:54:46] DEBUG MIDDLEWARE: Skipping auth for /docs
+[2026-02-20 15:55:08] DEBUG MIDDLEWARE: Request POST /api/v1/chat
+[2026-02-20 15:55:08] DEBUG MIDDLEWARE: Protected path /api/v1/chat
+[2026-02-20 15:55:08] DEBUG AUTH: Received token credentials: eyJhbGciOi...
+[2026-02-20 15:55:08] DEBUG AUTH: Successfully decoded claims using get_unverified_claims
+[2026-02-20 15:55:08] DEBUG AUTH: Decoded token for user_id: user_39NyvTMSW5d1Yeo98ks5shJbNvH
+[2026-02-20 15:55:13] DEBUG AUTH: Database lookup for user_39NyvTMSW5d1Yeo98ks5shJbNvH: Found
+[2026-02-20 15:55:14] DEBUG CHAT: Running agent for user user_39NyvTMSW5d1Yeo98ks5shJbNvH with history len 11
+[2026-02-20 15:55:14] DEBUG AGENT: Sending request to OpenAI (Turn 1)
+[2026-02-20 15:55:23] DEBUG AGENT: Received response from OpenAI
+[2026-02-20 15:55:23] DEBUG CHAT: Agent finished successfully

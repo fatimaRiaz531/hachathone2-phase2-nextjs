@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         destination: 'http://localhost:8000/api/:path*', // Proxy to Backend
       },
+      // Additional auth rewrites if needed
+      {
+        source: '/api/auth/:path*',
+        destination: 'http://localhost:8000/api/auth/:path*',
+      }
     ]
   },
 };

@@ -15,7 +15,7 @@ import {
   Save,
 } from 'lucide-react';
 import { apiClient } from '../lib/api';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Task {
   id: string;
@@ -29,7 +29,7 @@ interface Task {
 }
 
 export function TodoDashboard() {
-  const { isLoaded, userId, getToken } = useAuth();
+  const { user, loading, getToken } = useAuth();
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [title, setTitle] = useState('');
@@ -44,10 +44,10 @@ export function TodoDashboard() {
 
   // Initial load
   useEffect(() => {
-    if (isLoaded) {
+    if (!loading && user) {
       fetchTasks();
     }
-  }, [isLoaded, userId]);
+  }, [loading, user]);
 
   const fetchTasks = async () => {
     try {
@@ -57,7 +57,7 @@ export function TodoDashboard() {
       const token = await getToken();
       apiClient.setToken(token);
 
-      const currentUserId = userId || 'demo';
+      const currentUserId = user?.id || 'demo';
 
       const tasksList = (await apiClient.getTasks(currentUserId)) || [];
       setTasks(Array.isArray(tasksList) ? tasksList : []);
@@ -82,7 +82,7 @@ export function TodoDashboard() {
 
       const token = await getToken();
       apiClient.setToken(token);
-      const currentUserId = userId || 'demo';
+      const currentUserId = user?.id || 'demo';
 
       const created = await apiClient.createTask(currentUserId, {
         title: title.trim(),
@@ -111,7 +111,7 @@ export function TodoDashboard() {
 
       const token = await getToken();
       apiClient.setToken(token);
-      const currentUserId = userId || 'demo';
+      const currentUserId = user?.id || 'demo';
 
       const updated = await apiClient.updateTask(currentUserId, editingTask.id, {
         title: editingTask.title.trim(),
@@ -139,7 +139,7 @@ export function TodoDashboard() {
 
       const token = await getToken();
       apiClient.setToken(token);
-      const currentUserId = userId || 'demo';
+      const currentUserId = user?.id || 'demo';
 
       const updatedTask = await apiClient.completeTask(
         currentUserId,
@@ -166,7 +166,7 @@ export function TodoDashboard() {
 
       const token = await getToken();
       apiClient.setToken(token);
-      const currentUserId = userId || 'demo';
+      const currentUserId = user?.id || 'demo';
 
       await apiClient.deleteTaskById(currentUserId, id);
     } catch (err: any) {

@@ -1,8 +1,7 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { useUser, useAuth as useClerkAuth, useClerk } from '@clerk/nextjs'
 
 interface User {
   id: string
@@ -22,32 +21,50 @@ interface AuthContextType {
 // Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Auth provider component - wraps Clerk hooks for app-wide use
+// Auth provider component using Better Auth
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { user: clerkUser, isLoaded, isSignedIn } = useUser()
-  const { getToken } = useClerkAuth()
-  const { signOut } = useClerk()
-  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
-  // Sync Clerk user to local state
-  useEffect(() => {
-    if (isLoaded && isSignedIn && clerkUser) {
-      setUser({
-        id: clerkUser.id,
-        email: clerkUser.primaryEmailAddress?.emailAddress || '',
-        firstName: clerkUser.firstName || undefined,
-        lastName: clerkUser.lastName || undefined,
-      })
-    } else if (isLoaded && !isSignedIn) {
-      setUser(null)
+  // Initialize auth state
+  React.useEffect(() => {
+    // Check for existing session on mount
+    const checkSession = async () => {
+      try {
+        const token = localStorage.getItem('auth-token')
+        if (token) {
+          // Verify token and get user data
+          const response = await fetch('/api/auth/me', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+
+          if (response.ok) {
+            const userData = await response.json()
+            setUser({
+              id: userData.id,
+              email: userData.email,
+              firstName: userData.first_name,
+              lastName: userData.last_name
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Error checking session:', error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  }, [isLoaded, isSignedIn, clerkUser])
+
+    checkSession()
+  }, [])
 
   // Get JWT token for API calls
   const getAuthToken = async (): Promise<string | null> => {
     try {
-      const token = await getToken()
+      const token = localStorage.getItem('auth-token')
       return token
     } catch (error) {
       console.error('Failed to get auth token:', error)
@@ -57,10 +74,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Logout function
   const logout = async () => {
-    await signOut()
-    setUser(null)
-    router.push('/')
+    try {
+      // Remove token from localStorage
+      localStorage.removeItem('auth-token')
+
+      // Clear user data
+      setUser(null)
+
+      // Optionally call backend logout endpoint
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).catch(console.error)
+
+      router.push('/')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
+
+  const isSignedIn = !!user
 
   return (
     <AuthContext.Provider
@@ -68,8 +103,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         getToken: getAuthToken,
         logout,
-        isLoading: !isLoaded,
-        isSignedIn: isSignedIn ?? false
+        isLoading,
+        isSignedIn
       }}
     >
       {children}

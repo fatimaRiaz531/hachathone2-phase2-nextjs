@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { apiClient } from '../lib/api';
 import { TaskCard } from './TaskCard';
-import { useAuth } from '@clerk/nextjs';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Task {
   id: string;
